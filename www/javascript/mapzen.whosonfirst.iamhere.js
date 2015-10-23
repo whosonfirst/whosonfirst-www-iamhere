@@ -9,6 +9,7 @@ mapzen.whosonfirst.iamhere = (function(){
 		mapzen.whosonfirst.data.endpoint("http://localhost:9999/");
 
 		var map;
+		var current_layers = {};
 
 		var self = {
 			
@@ -88,9 +89,34 @@ mapzen.whosonfirst.iamhere = (function(){
 				
 				function update_where(possible){
 					
+					var count_possible = possible.length;
+					var count_current = current_layers.length;
+
+					var to_keep = {}
+
+					for (var i=0; i < count_possible; i++){
+
+						var loc = possible[i];
+						var wofid = loc['Id'];
+
+						if (current_layers[wofid]){
+							to_keep[wof_id] = 1;
+						}
+					}
+
+					for (var wofid in current_layers){
+						
+						if (to_keep[wofid]){
+							continue;
+						}
+
+						var layer = current_layers[wofid];
+						map.removeLayer(layer);
+					}
+
 					var li = document.getElementById("whereami-reversegeo");
-					
-					if ((! possible) || (possible.length == 0)){
+
+					if (! count_possible){
 						li.innerHTML = "a place we don't know about";
 						return;
 					}
@@ -99,10 +125,15 @@ mapzen.whosonfirst.iamhere = (function(){
 					var where = [];
 					
 					for (var i=0; i < count; i++){
+
 						var loc = possible[i];
 						var wofid = loc['Id'];
 						var here = loc['Name'];
 						where.push(here);
+
+						if (current_layers[wofid]){
+							continue;
+						}
 
 						// So this actually results in hilarity as it is
 						// written. Specifically the map tries to redraw itself
@@ -112,10 +143,15 @@ mapzen.whosonfirst.iamhere = (function(){
 						// as simple as defining a custom "on success" thingy but
 						// it's late and I don't remember... (20151022/thisisaaronland)
 
-						var on_fetch = function(geojson){
+						var on_fetch = function(feature){
+
+							var props = feature['properties'];
+							var wofid = props['wof:id'];
 
 							var style = mapzen.whosonfirst.leaflet.styles.consensus_polygon()
-							mapzen.whosonfirst.leaflet.draw_poly(map, geojson, style)
+							var layer = mapzen.whosonfirst.leaflet.draw_poly(map, feature, style);
+
+							current_layers[ wofid ] = layer;
 						};
 
 						mapzen.whosonfirst.enmapify.render_id(map, wofid, on_fetch);

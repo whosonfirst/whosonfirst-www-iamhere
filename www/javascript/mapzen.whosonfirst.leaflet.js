@@ -12,6 +12,7 @@ mapzen.whosonfirst.leaflet = (function(){
 			});
 			
 			layer.addTo(map);
+			return layer;
 		},
 		
 		'draw_poly': function(map, geojson, style){
@@ -36,6 +37,7 @@ mapzen.whosonfirst.leaflet = (function(){
 			}
 			
 			layer.addTo(map);
+			return layer;
 		},
 		
 		'draw_bbox': function(map, geojson, style){
