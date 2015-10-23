@@ -3,6 +3,11 @@ mapzen.whosonfirst = mapzen.whosonfirst || {};
 
 mapzen.whosonfirst.iamhere = (function(){
 
+		// Necessary until we stop sending CORS headers twice. A ticket
+		// has been filed with ops (20151022/thisisaaronland)
+
+		mapzen.whosonfirst.data.endpoint("http://localhost:9999/");
+
 		var map;
 
 		var self = {
@@ -99,7 +104,15 @@ mapzen.whosonfirst.iamhere = (function(){
 						var here = loc['Name'];
 						where.push(here);
 
-						mapzen.whosonfirst.enmapify.render_id(map, wofid);
+						// So this actually results in hilarity as it is
+						// written. Specifically the map tries to redraw itself
+						// as polygons are loaded triggering the map to re-center
+						// triggering the reverse-geocoder to fetch more polygons
+						// and well you can imagine what happens next. It might be
+						// as simple as defining a custom "on success" thingy but
+						// it's late and I don't remember... (20151022/thisisaaronland)
+
+						// mapzen.whosonfirst.enmapify.render_id(map, wofid);
 					}
 					
 					where = where.join(" or ");
