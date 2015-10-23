@@ -3,6 +3,8 @@ mapzen.whosonfirst = mapzen.whosonfirst || {};
 
 mapzen.whosonfirst.iamhere = (function(){
 
+		var map;
+
 		var self = {
 			
 			'init': function(){
@@ -25,7 +27,7 @@ mapzen.whosonfirst.iamhere = (function(){
 					var li = document.getElementById("whereami-reversegeo");
 					
 					if ((! possible) || (possible.length == 0)){
-						li.innerHTML = "somewhere";
+						li.innerHTML = "a place we don't know about";
 						return;
 					}
 					
@@ -33,8 +35,12 @@ mapzen.whosonfirst.iamhere = (function(){
 					var where = [];
 					
 					for (var i=0; i < count; i++){
-						var here = possible[i]['Name'];
+						var loc = possible[i];
+						var wofid = loc['Id'];
+						var here = loc['Name'];
 						where.push(here);
+
+						mapzen.whosonfirst.enmapify.render_id(map, wofid);
 					}
 					
 					where = where.join(" or ");
@@ -49,6 +55,9 @@ mapzen.whosonfirst.iamhere = (function(){
 					var lat = ll.lat;
 					var lon = ll.lng;
 					
+					lat = lat.toFixed(6);
+					lon = lon.toFixed(6);
+
 					var pos = lat + "," + lon;
 					pos = mapzen.whosonfirst.php.htmlspecialchars(pos);
 					
@@ -98,7 +107,7 @@ mapzen.whosonfirst.iamhere = (function(){
 				}
 				
 				mapzen.whosonfirst.leaflet.tangram.scenefile('/tangram/refill.yaml');
-				var map = mapzen.whosonfirst.leaflet.tangram.map_with_bbox('map', 37.63983, -123.173825, 37.929824, -122.28178);
+				map = mapzen.whosonfirst.leaflet.tangram.map_with_bbox('map', 37.63983, -123.173825, 37.929824, -122.28178);
 				
 				map.on('load', function(e){
 						update_loc();
@@ -122,6 +131,9 @@ mapzen.whosonfirst.iamhere = (function(){
 							lon = pos.coords.longitude;
 							
 							map.setView([lat, lon], 16)
+							update_loc();
+							reversegeo();
+
 						});		
 				};
 				

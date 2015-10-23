@@ -26,21 +26,26 @@
     <script type="text/javascript" src="javascript/mapzen.whosonfirst.data.js"></script>
     <script type="text/javascript" src="javascript/mapzen.whosonfirst.net.js"></script>
     <script type="text/javascript" src="javascript/mapzen.whosonfirst.log.js"></script>
+    <script type="text/javascript" src="javascript/mapzen.whosonfirst.enmapify.js"></script>
 
     <script type="text/javascript" src="javascript/mapzen.whosonfirst.iamhere.js"></script>
 
 </head>
 <body>
 
-<button id="findme">find my location</button>
+<div class="whereami-controls">
+<button id="findme">where am i </button>
+</div>
 
 <div id="map"><div id="crosshairs" style="background-color:#fff;"></div></div>
 
-<ul id="whereami">
+<div class="whereami-controls">
+<ul id="whereami-info">
 <li id="whereami-latlon"></li>
 <li id="whereami-zoom"></li>
 <li id="whereami-reversegeo"></li>
 </ul>
+</div>
 
 <script type="text/javascript">
 
