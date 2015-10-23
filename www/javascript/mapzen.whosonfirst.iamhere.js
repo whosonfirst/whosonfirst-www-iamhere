@@ -8,6 +8,65 @@ mapzen.whosonfirst.iamhere = (function(){
 		var self = {
 			
 			'init': function(){
+
+				// https://mapzen.com/documentation/search/search/#mapzen-search-finding-places
+
+				function pelias(q){
+
+					var k = "";
+
+					if (k == ""){
+						alert("missing api key");
+						return false;
+					}
+
+					var query = { 'text': q, 'api_key': k };
+					query = mapzen.whosonfirst.net.encode_query(query);
+
+					var req = "https://search.mapzen.com/v1/search?" + query;
+					mapzen.whosonfirst.net.fetch(req, on_pelias);
+				}
+
+				function on_pelias(rsp){
+
+					var features = rsp['features'];
+					var first = features[0];
+					
+					// var props = first['properties'];
+					// console.log(props);
+
+					var geom = first['geometry'];
+					var coords = geom['coordinates'];
+
+					var lat = coords[1];
+					var lon = coords[0];
+
+					jump_to(lat, lon, 12);
+
+					/*
+					var bbox = rsp['bbox'];
+					map.fitBounds([[bbox[1], bbox[0]], [ bbox[3], bbox[2] ]]);
+					*/
+
+					// please to write a generic put dots on the map thingy
+
+					/*
+					var features = rsp['features'];
+					var count = features.length;
+
+					for (var i=0; i < count; i++){
+						var feature = features[i];
+					}
+					*/
+				}
+
+				function jump_to(lat, lon, zoom){
+
+					map.setView([lat, lon], zoom)
+					update_loc();
+					reversegeo();
+				}
+
 				var reversegeo = function(){
 					
 					var ll = map.getCenter();
@@ -121,19 +180,31 @@ mapzen.whosonfirst.iamhere = (function(){
 						update_loc();
 						reversegeo();
 					});
-				
+
+				var find = document.getElementById("find");
+			       		
+				find.onclick = function(){
+
+					var q = document.getElementById("q");
+					q = q.value
+
+					if (q == ""){
+						return false;
+					}
+
+					pelias(q);
+					return false;
+				};
+
 				var findme = document.getElementById("findme");
-				
+
 				findme.onclick = function(){
 					
 					navigator.geolocation.getCurrentPosition(function(pos){
 							lat = pos.coords.latitude;
 							lon = pos.coords.longitude;
-							
-							map.setView([lat, lon], 16)
-							update_loc();
-							reversegeo();
-
+		
+							jump_to(lat, lon, 16);
 						});		
 				};
 				

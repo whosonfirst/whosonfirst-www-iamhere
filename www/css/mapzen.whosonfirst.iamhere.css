@@ -13,6 +13,9 @@ body {
 
 button {
        border: solid thin;
+       padding:.2em;
+       padding-left:.75em;
+       padding-right:.75em;
 }
 
 .whereami-controls {
