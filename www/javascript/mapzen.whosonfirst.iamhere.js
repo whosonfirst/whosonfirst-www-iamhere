@@ -112,7 +112,13 @@ mapzen.whosonfirst.iamhere = (function(){
 						// as simple as defining a custom "on success" thingy but
 						// it's late and I don't remember... (20151022/thisisaaronland)
 
-						// mapzen.whosonfirst.enmapify.render_id(map, wofid);
+						var on_fetch = function(geojson){
+
+							var style = mapzen.whosonfirst.leaflet.styles.consensus_polygon()
+							mapzen.whosonfirst.leaflet.draw_poly(map, geojson, style)
+						};
+
+						mapzen.whosonfirst.enmapify.render_id(map, wofid, on_fetch);
 					}
 					
 					where = where.join(" or ");
