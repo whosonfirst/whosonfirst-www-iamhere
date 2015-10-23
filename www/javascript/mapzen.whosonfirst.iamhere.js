@@ -181,6 +181,8 @@ mapzen.whosonfirst.iamhere = (function(){
 				mapzen.whosonfirst.leaflet.tangram.scenefile('/tangram/refill.yaml');
 				map = mapzen.whosonfirst.leaflet.tangram.map_with_bbox('map', 37.63983, -123.173825, 37.929824, -122.28178);
 				
+				L.hash(map);
+
 				map.on('load', function(e){
 						update_loc();
 					});
