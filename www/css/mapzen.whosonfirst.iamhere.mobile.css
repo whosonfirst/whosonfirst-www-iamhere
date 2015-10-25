@@ -1,5 +1,9 @@
 @media (max-width: 400px) {
 
+       body {
+       	    margin-top:1em;
+       }
+
        #map {
        	    height:225px;
        }
@@ -8,6 +12,12 @@
        		max-height: 50px;
 		font-size:.8em;
        }
+
+       #findme {
+       	       padding-right:0px;
+	       padding-left:1.5em;
+       }
+
 
        #whereami-info {
        		      font-size:small !important;
@@ -18,6 +28,9 @@
 	      text-align:left;
 	      margin-left:1em;	
 	      margin-right:1em;
-      }		      
+      }
 
+      .whereami-search {
+      		       text-align:center !important;
+      }
 }

@@ -2,6 +2,13 @@ body {
      margin-top:2em;
      margin-bottom:2em;
 }
+#findme {
+	font-weight:700;
+	border:none;
+	background-color:#fff;
+	font-size:1.4em;
+	color: #2E78A8;
+}
 
 #wof-log {
     position: fixed;
@@ -18,6 +25,7 @@ body {
 	 padding-right: 2em;
 	 padding-bottom:2em;
 	 margin-top:2em;
+	 margin-bottom:.5em;
 }
 
 #map {
