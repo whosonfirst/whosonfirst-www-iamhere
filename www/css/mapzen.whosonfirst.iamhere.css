@@ -26,6 +26,7 @@ body {
 	 padding-bottom:2em;
 	 margin-top:2em;
 	 margin-bottom:.5em;
+	 background-color:#fff;
 }
 
 #map {
@@ -69,9 +70,12 @@ text-align:center;
   content: "at zoom level ";			
 }
 
+#whereami-reversegeo {
+     display:none !important;
+}
+
 #whereami-reversegeo:before {
   font-weight: 200;
   font-size: small; 
   content: "which appears to be somewhere in ";
 }
-

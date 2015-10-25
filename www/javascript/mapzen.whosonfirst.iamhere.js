@@ -135,6 +135,10 @@ mapzen.whosonfirst.iamhere = (function(){
 				var on_fetch = function(rsp){ self.on_reverse_geocode(rsp); };
 
 				mapzen.whosonfirst.net.fetch(req, on_fetch);
+
+				var el = document.getElementById("whereami-reversegeo");
+				el.style = "display:none !important;";
+				el.innerHTML = "";
 			},
 
 			'on_reverse_geocode': function(possible){
@@ -165,7 +169,8 @@ mapzen.whosonfirst.iamhere = (function(){
 				}
 				
 				var li = document.getElementById("whereami-reversegeo");
-				
+				li.style = "display:inline !important;";
+
 				if (! count_possible){
 					li.innerHTML = "a place we don't know about";
 					return;
