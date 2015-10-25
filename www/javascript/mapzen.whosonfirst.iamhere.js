@@ -130,14 +130,17 @@ mapzen.whosonfirst.iamhere = (function(){
 				var lat = ll.lat;
 				var lon = ll.lng;
 				
-				var q = { 'latitude': lat, 'longitude': lon };
-				q = mapzen.whosonfirst.net.encode_query(q);
-				
-				var req = pip_endpoint + "?" + q;
-				
-				var on_fetch = function(rsp){ self.on_reverse_geocode(rsp); };
+				var on_success = function(rsp){
+					self.on_reverse_geocode(rsp);
+				};
 
-				mapzen.whosonfirst.net.fetch(req, on_fetch);
+				var on_fail = function(rsp){
+					var el = document.getElementById("whereami-reversegeo");
+					el.style = "display:inline !important;";
+					el.innerHTML = "the land of INVISIBLE ERROR CAT";
+				};
+
+				mapzen.whosonfirst.pip.get_by_latlon(lat, lon, on_success, on_fail);
 
 				var el = document.getElementById("whereami-reversegeo");
 				el.style = "display:none !important;";
