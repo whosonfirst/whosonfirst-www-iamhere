@@ -33,8 +33,11 @@ mapzen.whosonfirst.iamhere = (function(){
 						self.update_location();
 					});
 				
-				map.on('dragend', function(e){
+				map.on('move', function(e){
 						self.update_location();
+					});
+				
+				map.on('dragend', function(e){
 						self.reverse_geocode();
 					});
 
