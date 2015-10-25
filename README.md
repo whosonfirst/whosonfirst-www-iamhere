@@ -15,6 +15,7 @@ INFO:root:Serving up a whosonfirst-www-iamhere map on 127.0.0.1, port 8001
 
 And then when you visit `http://127.0.0.1:8001` you would see the actual "iamhere" map in your web browser and the following on the command-line (where you started the `iamhere-server`):
 
+```
 127.0.0.1 - - [24/Oct/2015 22:04:39] "GET / HTTP/1.1" 200 -
 127.0.0.1 - - [24/Oct/2015 22:04:39] "GET /css/bootstrap.min.css HTTP/1.1" 200 -
 127.0.0.1 - - [24/Oct/2015 22:04:40] "GET /css/leaflet.css HTTP/1.1" 200 -
