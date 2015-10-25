@@ -4,19 +4,20 @@ body {
 }
 
 #wof-log {
-	 /* TO DO - pin to the bottom of the page */
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 	 max-height: 100px;
 	 overflow:scroll;
 	 font-family:monospace;
 	 font-size:small;
 	 border-top: 1px dotted #000;
-	 border-bottom: 1px dotted #000;
+	 border-bottom: 1px dotted #fff;
 	 padding:1em;
 	 padding-left:2em;
 	 padding-right: 2em;
 	 padding-bottom:2em;
 	 margin-top:2em;
-	 margin-bottom:2em;
 }
 
 #map {
