@@ -19,7 +19,10 @@ mapzen.whosonfirst.iamhere = (function(){
 		var self = {
 			
 			'init': function(){
-				
+
+				// TO DO - try to be smart(er) about where to load the default map
+				// besides just the SF Bay Area...
+
 				mapzen.whosonfirst.leaflet.tangram.scenefile('/tangram/refill.yaml');
 				map = mapzen.whosonfirst.leaflet.tangram.map_with_bbox('map', 37.63983, -123.173825, 37.929824, -122.28178);
 				
@@ -41,30 +44,18 @@ mapzen.whosonfirst.iamhere = (function(){
 						self.reverse_geocode();
 					});
 
-				var find = document.getElementById("find");
-			       		
-				find.onclick = function(){
-
-					var q = document.getElementById("q");
-					q = q.value
-
-					if (q == ""){
-						return false;
-					}
-
-					self.geocode(q);
-					return false;
-				};
+				var find = document.getElementById("find");			       		
+				find.onclick = self.search;
 
 				var findme = document.getElementById("findme");
 				findme.onclick = self.geolocate;
 
 				window.onresize = self.draw_crosshairs;
 				
+				self.draw_crosshairs();
 				self.update_location();
 				self.reverse_geocode();
 				
-				self.draw_crosshairs();
 			},
 
 			'geolocate': function(){
@@ -78,6 +69,20 @@ mapzen.whosonfirst.iamhere = (function(){
 				navigator.geolocation.getCurrentPosition(on_locate);
 			},
 			
+			'search': function(){
+
+				var q = document.getElementById("q");
+				q = q.value
+				
+				if (q == ""){
+					alert("You forgot to say what you're searching for...");
+					return false;
+				}
+				
+				self.geocode(q);
+				return false;
+			},
+
 			'geocode': function(q){
 
 				if (pelias_apikey == ""){
@@ -137,7 +142,7 @@ mapzen.whosonfirst.iamhere = (function(){
 				var on_fail = function(rsp){
 					var el = document.getElementById("whereami-reversegeo");
 					el.style = "display:inline !important;";
-					el.innerHTML = "the land of INVISIBLE ERROR CAT";
+					el.innerHTML = "the land of INVISIBLE ERROR CAT because the reverse geocoding failed";
 				};
 
 				mapzen.whosonfirst.pip.get_by_latlon(lat, lon, on_success, on_fail);
