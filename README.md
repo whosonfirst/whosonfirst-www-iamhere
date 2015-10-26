@@ -46,15 +46,23 @@ You should treat this web server as a toy. Anecdotally it is also very finnicky.
 
 ### Running remotely
 
-TBW
+_This section is still being written_
 
-### Running a local copy of `go-whosonfirst-pip`
+This assumes that you have a local copy of the [whosonfirst-data]() repository on your computer. For the sake of the following examples we'll assume it is located in `/usr/local/mapzen/whosonfirst-data`.
 
-For example:
+### Point-in-polygon (pip) server
 
 ```
-./bin/pip-server -cors -data /usr/local/mapzen/whosonfirst-data/data /usr/local/mapzen/whosonfirst-data/meta/wof-neighbourhood-latest.csv /usr/local/mapzen/whosonfirst-data/meta/wof-marinearea-latest.csv 
+$> pip-server -cors -data /usr/local/mapzen/whosonfirst-data/data /usr/local/mapzen/whosonfirst-data/meta/wof-neighbourhood-latest.csv /usr/local/mapzen/whosonfirst-data/meta/wof-marinearea-latest.csv 
 ```
+
+### data server
+
+$> wof-fileserver -port 9999 -path /usr/local/mapzen/whosonfirst-data/data/ -cors
+
+### file server
+
+$> wof-fileserver -port 8001 -path /usr/local/mapzen/whosonfirst-www-iamhere/www/
 
 ## See also
 
