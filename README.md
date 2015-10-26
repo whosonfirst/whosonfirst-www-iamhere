@@ -44,6 +44,14 @@ And then when you visit `http://127.0.0.1:8001` you would see the actual "iamher
 
 TBW
 
+### Running a local copy of `go-whosonfirst-pip`
+
+For example:
+
+```
+./bin/pip-server -cors -data /usr/local/mapzen/whosonfirst-data/data /usr/local/mapzen/whosonfirst-data/meta/wof-neighbourhood-latest.csv /usr/local/mapzen/whosonfirst-data/meta/wof-marinearea-latest.csv 
+```
+
 ## See also
 
 * https://github.com/whosonfirst/whosonfirst-data

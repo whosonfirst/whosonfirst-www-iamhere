@@ -11,7 +11,9 @@ mapzen.whosonfirst.pip = (function(){
 
 				var q = { 'latitude': lat, 'longitude': lon };
 				q = mapzen.whosonfirst.net.encode_query(q);
-				
+
+				mapzen.whosonfirst.log.info("pip " + q);
+
 				var req = self.endpoint() + "?" + q;
 				
 				mapzen.whosonfirst.net.fetch(req, on_success, on_error);

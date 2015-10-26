@@ -2,12 +2,18 @@ body {
      margin-top:2em;
      margin-bottom:2em;
 }
+
+#search {
+      display:none;
+}
+
 #findme {
 	font-weight:700;
 	border:none;
 	background-color:#fff;
 	font-size:1.4em;
 	color: #2E78A8;
+	display:none;
 }
 
 #wof-log {

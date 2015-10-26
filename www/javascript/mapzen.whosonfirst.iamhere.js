@@ -3,15 +3,7 @@ mapzen.whosonfirst = mapzen.whosonfirst || {};
 
 mapzen.whosonfirst.iamhere = (function(){
 
-		// Necessary until we stop sending CORS headers twice. A ticket
-		// has been filed with ops (20151022/thisisaaronland)
-		
-		mapzen.whosonfirst.data.endpoint("http://localhost:9999/");
-
-		var pelias_endpoint = '';
-		var pelias_apikey = '';
-
-		var pip_endpoint = '';
+		var _scenefile = '/tangram/refill.yaml';
 
 		var map;
 		var current_layers = {};
@@ -20,10 +12,12 @@ mapzen.whosonfirst.iamhere = (function(){
 			
 			'init': function(){
 
+				var s = mapzen.whosonfirst.iamhere.scenefile()
+				mapzen.whosonfirst.leaflet.tangram.scenefile(s);
+
 				// TO DO - try to be smart(er) about where to load the default map
 				// besides just the SF Bay Area...
 
-				mapzen.whosonfirst.leaflet.tangram.scenefile('/tangram/refill.yaml');
 				map = mapzen.whosonfirst.leaflet.tangram.map_with_bbox('map', 37.63983, -123.173825, 37.929824, -122.28178);
 				
 				L.hash(map);
@@ -44,12 +38,35 @@ mapzen.whosonfirst.iamhere = (function(){
 						self.reverse_geocode();
 					});
 
-				var find = document.getElementById("find");			       		
-				find.onclick = self.search;
+				if (mapzen.whosonfirst.pelias.endpoint()){
 
-				var findme = document.getElementById("findme");
-				findme.onclick = self.geolocate;
+					if (mapzen.whosonfirst.pelias.apikey()){
+						var find = document.getElementById("find");
+						find.onclick = self.search;
 
+						var search = document.getElementById("search");
+						search.style = "display:inline;";
+					}
+
+					else {
+						mapzen.whosonfirst.log.warning("Search is disabled because no API key has been defined");
+					}
+				}
+
+				else {
+					mapzen.whosonfirst.log.warning("Search is disabled because no API endpoint has been defined");
+				}
+
+				if (mapzen.whosonfirst.pip.endpoint()){
+					var findme = document.getElementById("findme");
+					findme.style = "display:inline !important;";
+					findme.onclick = self.geolocate;
+				}
+
+				else {
+					mapzen.whosonfirst.log.warning("Reverse geocoding is disabled because no API endpoint has been defined");
+				}
+				
 				window.onresize = self.draw_crosshairs;
 				
 				self.draw_crosshairs();
@@ -78,25 +95,22 @@ mapzen.whosonfirst.iamhere = (function(){
 					alert("You forgot to say what you're searching for...");
 					return false;
 				}
-				
+
 				self.geocode(q);
 				return false;
 			},
 
 			'geocode': function(q){
 
-				if (pelias_apikey == ""){
-					alert("missing api key");
-					return false;
-				}
+				var on_success = function(rsp){
+					self.on_geocode(rsp);
+				};
 
-				var query = { 'text': q, 'api_key': pelias_apikey };
-				query = mapzen.whosonfirst.net.encode_query(query);
+				var on_fail = function(){
 
-				var req = pelias_endpoint + "?" + query;
-
-				var on_fetch = function(rsp){ self.on_geocode(rsp); };
-				mapzen.whosonfirst.net.fetch(req, on_fetch);
+				};
+				
+				mapzen.whosonfirst.pelias.search(q, on_success, on_fail);
 			},
 
 			'on_geocode': function(rsp){
@@ -156,7 +170,9 @@ mapzen.whosonfirst.iamhere = (function(){
 
 				var count_possible = possible.length;
 				var count_current = current_layers.length;
-				
+
+				mapzen.whosonfirst.log.info("reverse geocode possible results: " + count_possible);
+
 				var to_keep = {}
 				
 				for (var i=0; i < count_possible; i++){
@@ -165,7 +181,7 @@ mapzen.whosonfirst.iamhere = (function(){
 					var wofid = loc['Id'];
 					
 					if (current_layers[wofid]){
-						to_keep[wof_id] = 1;
+						to_keep[wofid] = 1;
 					}
 				}
 				
@@ -206,7 +222,7 @@ mapzen.whosonfirst.iamhere = (function(){
 						var props = feature['properties'];
 						var wofid = props['wof:id'];
 						
-						var style = mapzen.whosonfirst.leaflet.styles.consensus_polygon()
+						var style = mapzen.whosonfirst.leaflet.styles.pip_polygon()
 						var layer = mapzen.whosonfirst.leaflet.draw_poly(map, feature, style);
 						
 						current_layers[ wofid ] = layer;
@@ -281,8 +297,17 @@ mapzen.whosonfirst.iamhere = (function(){
 				style = style.join(";");
 				var crosshair = document.getElementById("crosshairs");
 				crosshair.style = style;
-			}
+			},
 
+			'scenefile': function(s){
+
+				if (s){
+					_scenefile = s;
+				}
+
+				return _scenefile;
+			},
+			
 		};
 		
 		return self;

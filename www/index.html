@@ -32,14 +32,16 @@
     <script type="text/javascript" src="javascript/mapzen.whosonfirst.log.js"></script>
     <script type="text/javascript" src="javascript/mapzen.whosonfirst.enmapify.js"></script>
     <script type="text/javascript" src="javascript/mapzen.whosonfirst.pip.js"></script>
+    <script type="text/javascript" src="javascript/mapzen.whosonfirst.pelias.js"></script>
 
+    <script type="text/javascript" src="javascript/mapzen.whosonfirst.config.js"></script>
     <script type="text/javascript" src="javascript/mapzen.whosonfirst.iamhere.js"></script>
 
 </head>
 <body>
 
 <div class="whereami-controls whereami-search">
-<form style="display:inline;">
+<form id="search">
 <input type="text" name="q" id="q" placeholder="search for a place" />
 <button id="find">search</button>
 </form>
@@ -62,6 +64,8 @@
 <script type="text/javascript">
 
 window.onload = function(e){
+
+	mapzen.whosonfirst.config.init();		
 	mapzen.whosonfirst.iamhere.init();
 }
 

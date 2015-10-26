@@ -1,0 +1,20 @@
+var mapzen = mapzen || {};
+mapzen.whosonfirst = mapzen.whosonfirst || {};
+
+mapzen.whosonfirst.config = (function(){
+
+	var self = {
+
+		'init': function(){
+
+			mapzen.whosonfirst.data.endpoint("http://localhost:9999/");
+			mapzen.whosonfirst.pip.endpoint("http://localhost:8080/");
+			
+			// mapzen.whosonfirst.pelias.endpoint("");
+			// mapzen.whosonfirst.pelias.apikey("");
+		}
+	};
+
+	return self
+
+})();

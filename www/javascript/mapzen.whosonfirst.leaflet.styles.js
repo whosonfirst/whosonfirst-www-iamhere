@@ -88,6 +88,17 @@ mapzen.whosonfirst.leaflet.styles = (function(){
 			};
 		},
 
+		'pip_polygon': function(){
+
+			return {
+				"color": "#ff0066",
+				"weight": 2,
+				"opacity": 1,
+				"fillColor": "#ff69b4",
+				"fillOpacity": 0.1
+			};
+		},
+
 		'parent_polygon': function(){
 
 			return {
