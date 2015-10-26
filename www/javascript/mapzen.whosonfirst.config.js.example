@@ -12,6 +12,8 @@ mapzen.whosonfirst.config = (function(){
 			
 			// mapzen.whosonfirst.pelias.endpoint("");
 			// mapzen.whosonfirst.pelias.apikey("");
+
+			// mapzen.whosonfirst.log.show();
 		}
 	};
 

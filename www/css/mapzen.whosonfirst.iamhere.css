@@ -16,6 +16,10 @@ body {
 	display:none;
 }
 
+#wof-log-container {
+	 display:none;
+}
+
 #wof-log {
     position: fixed;
     bottom: 0;

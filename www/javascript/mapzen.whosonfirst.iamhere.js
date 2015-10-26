@@ -191,6 +191,8 @@ mapzen.whosonfirst.iamhere = (function(){
 						continue;
 					}
 					
+					mapzen.whosonfirst.log.debug("remove layer for WOF ID " + wofid);
+
 					var layer = current_layers[wofid];
 					map.removeLayer(layer);
 				}
@@ -210,8 +212,16 @@ mapzen.whosonfirst.iamhere = (function(){
 					
 					var loc = possible[i];
 					var wofid = loc['Id'];
-					var here = loc['Name'];
-					where.push(here);
+					var name = loc['Name'];
+
+					var enc_id  = encodeURIComponent(wofid);
+					var enc_name = mapzen.whosonfirst.php.htmlspecialchars(name);
+
+					var link = '<a href="https://whosonfirst.mapzen.com/spelunker/id/' + enc_id + '/">';
+					link += enc_name
+					link += '</a>';
+
+					where.push(link);
 					
 					if (current_layers[wofid]){
 						continue;
@@ -221,6 +231,8 @@ mapzen.whosonfirst.iamhere = (function(){
 						
 						var props = feature['properties'];
 						var wofid = props['wof:id'];
+
+						mapzen.whosonfirst.log.debug("draw layer for WOF ID " + wofid);
 						
 						var style = mapzen.whosonfirst.leaflet.styles.pip_polygon()
 						var layer = mapzen.whosonfirst.leaflet.draw_poly(map, feature, style);
@@ -228,11 +240,13 @@ mapzen.whosonfirst.iamhere = (function(){
 						current_layers[ wofid ] = layer;
 					};
 					
+					mapzen.whosonfirst.log.debug("fetch layer for WOF ID " + wofid);
+
 					mapzen.whosonfirst.enmapify.render_id(map, wofid, on_fetch);
 				}
-				
+
+				// note: we are escaping things above
 				where = where.join(" or ");
-				where = mapzen.whosonfirst.php.htmlspecialchars(where);
 				
 				li.innerHTML = where;
 			},

@@ -94,8 +94,8 @@ mapzen.whosonfirst.leaflet.styles = (function(){
 				"color": "#ff0066",
 				"weight": 2,
 				"opacity": 1,
-				"fillColor": "#ff69b4",
-				"fillOpacity": 0.1
+				"fillColor": "#00308F",
+				"fillOpacity": 0.5
 			};
 		},
 

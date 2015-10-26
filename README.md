@@ -6,7 +6,7 @@ WORK IN PROGRESS
 
 ### Running locally
 
-Because some browsers are super conservative about what can and can't run on `localhost` (aka your local machine) and what can be served from a `file://` URL (aka your hard drive) the [tangram.js]() maps need to be "served" from an actual web server. A tiny little Python server is included in the `bin` directrory that is configured to serve static files from the `www` directory (in this repository). Like this:
+Because some browsers are super conservative about what can and can't run on `localhost` (aka your local machine) and what can be served from a `file://` URL (aka your hard drive) the [tangram.js]() maps need to be "served" from an actual web server. A tiny little web server (written in Python) is included in the `bin` directrory that is configured to serve static files from the `www` directory (in this repository). Like this:
 
 ```
 102 ->./bin/iamhere-server
@@ -39,6 +39,10 @@ And then when you visit `http://127.0.0.1:8001` you would see the actual "iamher
 127.0.0.1 - - [24/Oct/2015 22:04:40] "GET /tangram/refill.yaml?1445749480566 HTTP/1.1" 200 -
 127.0.0.1 - - [24/Oct/2015 22:04:40] "GET /tangram/images/poi_icons_18@2x.png HTTP/1.1" 200 -
 ```
+
+#### Caveats
+
+You should treat this web server as a toy. Anecdotally it is also very finnicky. It is included in order to try and minimize the number of _other things_ you need to install on your computer in order to get the examples working. Not everyone has Python installed on their computers by default but many do.
 
 ### Running remotely
 
