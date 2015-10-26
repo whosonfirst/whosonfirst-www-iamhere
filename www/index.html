@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="css/leaflet.css" />
     <link rel="stylesheet" type="text/css" href="css/leaflet.label.css" />
     <link rel="stylesheet" type="text/css" href="css/mapzen.whosonfirst.iamhere.css" />
+    <link rel="stylesheet" type="text/css" href="css/mapzen.whosonfirst.iamhere.mobile.css" />
 
     <script type="text/javascript" src="javascript/leaflet.js"></script>
     <script type="text/javascript" src="javascript/leaflet.label.js"></script>
@@ -30,19 +31,20 @@
     <script type="text/javascript" src="javascript/mapzen.whosonfirst.net.js"></script>
     <script type="text/javascript" src="javascript/mapzen.whosonfirst.log.js"></script>
     <script type="text/javascript" src="javascript/mapzen.whosonfirst.enmapify.js"></script>
+    <script type="text/javascript" src="javascript/mapzen.whosonfirst.pip.js"></script>
 
     <script type="text/javascript" src="javascript/mapzen.whosonfirst.iamhere.js"></script>
 
 </head>
 <body>
 
-<div class="whereami-controls">
+<div class="whereami-controls whereami-search">
 <form style="display:inline;">
 <input type="text" name="q" id="q" placeholder="search for a place" />
-<button id="find">← find this place</button>
+<button id="find">search</button>
 </form>
 
-<button id="findme">or find my location</button>
+<button id="findme" title="find my location">⌖</button>
 </div>
 
 <div id="map"><div id="crosshairs" style="background-color:#fff;"></div></div>

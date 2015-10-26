@@ -2,21 +2,31 @@ body {
      margin-top:2em;
      margin-bottom:2em;
 }
+#findme {
+	font-weight:700;
+	border:none;
+	background-color:#fff;
+	font-size:1.4em;
+	color: #2E78A8;
+}
 
 #wof-log {
-	 /* TO DO - pin to the bottom of the page */
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 	 max-height: 100px;
 	 overflow:scroll;
 	 font-family:monospace;
 	 font-size:small;
 	 border-top: 1px dotted #000;
-	 border-bottom: 1px dotted #000;
+	 border-bottom: 1px dotted #fff;
 	 padding:1em;
 	 padding-left:2em;
 	 padding-right: 2em;
 	 padding-bottom:2em;
 	 margin-top:2em;
-	 margin-bottom:2em;
+	 margin-bottom:.5em;
+	 background-color:#fff;
 }
 
 #map {
@@ -60,9 +70,12 @@ text-align:center;
   content: "at zoom level ";			
 }
 
+#whereami-reversegeo {
+     display:none !important;
+}
+
 #whereami-reversegeo:before {
   font-weight: 200;
   font-size: small; 
   content: "which appears to be somewhere in ";
 }
-
