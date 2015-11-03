@@ -1,8 +1,8 @@
 # whosonfirst-www-iamhere
 
-`whosonfirst-www-iamhere` is a small web application for displaying coordinates based on the position of the map. Plus Who's on First data, optionally.
-
 ![](images/whosonfirst-www-iamhere.png)
+
+`whosonfirst-www-iamhere` is a small web application for displaying coordinates based on the position of the map. Plus Who's on First data, optionally.
 
 ## Usage
 
@@ -71,6 +71,10 @@ The `mapzen.whosonfirst.config.js` file is explicitly excluded from being checke
 ### Running remotely
 
 _This section is still being written_
+
+## Caveats
+
+This mostly works but is still a work-in-progress.
 
 ## See also
 
