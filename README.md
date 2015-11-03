@@ -1,6 +1,8 @@
 # whosonfirst-www-iamhere
 
-A small web application for displaying coordinates based on the position of the map. Plus Who's on First data, optionally.
+`whosonfirst-www-iamhere` is a small web application for displaying coordinates based on the position of the map. Plus Who's on First data, optionally.
+
+![](images/whosonfirst-www-iamhere.png)
 
 ## Usage
 
@@ -40,7 +42,9 @@ By default everything in this repository assumes the point-in-polygon server is 
 
 This can be anything you want it to be, really. We have written a small HTTP-based static webserver in the `Go` programming language called `wof-fileserver` that is part of the [go-whosonfirst-fileserver](https://github.com/whosonfirst/go-whosonfirst-fileserver) repository.  You will need to download, install and configure it yourself (it's not very hard).
 
+```
 $> wof-fileserver -port 9999 -path /usr/local/mapzen/whosonfirst-data/data/ -cors
+```
 
 By default everything in this repository assumes the point-in-polygon server is running on port `9999`. If you change that you will need to update the `mapzen.whosonfirst.data.endpoint` setting in config file, described below.
 
@@ -48,7 +52,9 @@ By default everything in this repository assumes the point-in-polygon server is 
 
 This can be anything you want it to be, really. We have written a small HTTP-based static webserver in the `Go` programming language called `wof-fileserver` that is part of the [go-whosonfirst-fileserver](https://github.com/whosonfirst/go-whosonfirst-fileserver) repository.  You will need to download, install and configure it yourself (it's not very hard).
 
+```
 $> wof-fileserver -port 8001 -path /usr/local/mapzen/whosonfirst-www-iamhere/www/
+```
 
 #### mapzen.whosonfirst.config.js
 
