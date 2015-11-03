@@ -1,68 +1,70 @@
 # whosonfirst-www-iamhere
 
-WORK IN PROGRESS
+A small web application for displaying coordinates based on the position of the map. Plus Who's on First data, optionally.
 
 ## Usage
 
-### Running locally
+### Running locally - simple
 
-Because some browsers are super conservative about what can and can't run on `localhost` (aka your local machine) and what can be served from a `file://` URL (aka your hard drive) the [tangram.js]() maps need to be "served" from an actual web server. A tiny little web server (written in Python) is included in the `bin` directrory that is configured to serve static files from the `www` directory (in this repository). Like this:
+There is one thing you need to run `whosonfirst-www-iamhere` locally in "simple" mode. Simple mode just means a map with live-updating information about its position.
+
+* An HTTP file server for the `whosonfirst-www-iamhere` itself. This is because some browsers are super conservative about what can and can't run on `localhost` (aka your local machine) and what can be served from a `file://` URL (aka your hard drive) the [tangram.js](https://github.com/tangrams/tangram) maps need to be "served" from an actual web server.
+
+### Running locally - fancy
+
+There are four separate components to running `whosonfirst-www-iamhere` locally in "fancy" mode. Fancy mode means a map with live-updating information about its position that will reverse-geocode those coordinates and display their corresponding Who's On First polygons. Optionally, you can also enable searching for a specific place using the [Mapzen Search API](https://mapzen.com/projects/search).
+
+They are:
+
+* An HTTP file server for the `whosonfirst-www-iamhere` itself. This is because some browsers are super conservative about what can and can't run on `localhost` (aka your local machine) and what can be served from a `file://` URL (aka your hard drive) the [tangram.js](https://github.com/tangrams/tangram) maps need to be "served" from an actual web server.
+
+* An HTTP file server (that can set `CORS` headers) for the serving Who's On First data.
+
+* The [go-whosonfirst-pip](https://github.com/whosonfirst/go-whosonfirst-pip) point-in-polygon server used to query the data. 
+
+* A copy of the [whosonfirst-data](https://github.com/whosonfirst/whosonfirst-data) repository. You don't actually need all of the data. You just need all of the files listed in the CSV file(s) that the point-in-polygon server needs to load in folder organized in the standard Who's On First `123/456/7/1234567.geojson` tree structure.
+
+* Surprise! There is also a fifth moving part, which is a local (Javascript) settings file that you will need to configure by hand. Conveniently there is a sample versions which can simply rename if you want to use all the default settings.
+
+#### Point-in-polygon (pip) server
+
+This is a small application written in the `Go` programming language. You will need to download, install and configure it yourself (it's not very hard).
 
 ```
-102 ->./bin/iamhere-server
-INFO:root:Serving up a whosonfirst-www-iamhere map on 127.0.0.1, port 8001
+$> pip-server -port 8080 -cors -data /usr/local/mapzen/whosonfirst-data/data /usr/local/mapzen/whosonfirst-data/meta/wof-neighbourhood-latest.csv /usr/local/mapzen/whosonfirst-data/meta/wof-marinearea-latest.csv 
 ```
 
-And then when you visit `http://127.0.0.1:8001` you would see the actual "iamhere" map in your web browser and the following on the command-line (where you started the `iamhere-server`):
+By default everything in this repository assumes the point-in-polygon server is running on port `8080`. If you change that you will need to update the `mapzen.whosonfirst.pip.endpoint` setting in config file, described below.
 
-```
-127.0.0.1 - - [24/Oct/2015 22:04:39] "GET / HTTP/1.1" 200 -
-127.0.0.1 - - [24/Oct/2015 22:04:39] "GET /css/bootstrap.min.css HTTP/1.1" 200 -
-127.0.0.1 - - [24/Oct/2015 22:04:40] "GET /css/leaflet.css HTTP/1.1" 200 -
-127.0.0.1 - - [24/Oct/2015 22:04:40] "GET /css/leaflet.label.css HTTP/1.1" 200 -
-127.0.0.1 - - [24/Oct/2015 22:04:40] "GET /css/mapzen.whosonfirst.iamhere.css HTTP/1.1" 200 -
-127.0.0.1 - - [24/Oct/2015 22:04:40] "GET /javascript/leaflet.js HTTP/1.1" 200 -
-127.0.0.1 - - [24/Oct/2015 22:04:40] "GET /javascript/leaflet.label.js HTTP/1.1" 200 -
-127.0.0.1 - - [24/Oct/2015 22:04:40] "GET /javascript/leaflet.hash.js HTTP/1.1" 200 -
-127.0.0.1 - - [24/Oct/2015 22:04:40] "GET /javascript/tangram.min.js HTTP/1.1" 200 -
-127.0.0.1 - - [24/Oct/2015 22:04:40] "GET /javascript/mapzen.whosonfirst.leaflet.js HTTP/1.1" 200 -
-127.0.0.1 - - [24/Oct/2015 22:04:40] "GET /javascript/mapzen.whosonfirst.leaflet.styles.js HTTP/1.1" 200 -
-127.0.0.1 - - [24/Oct/2015 22:04:40] "GET /javascript/mapzen.whosonfirst.leaflet.handlers.js HTTP/1.1" 200 -
-127.0.0.1 - - [24/Oct/2015 22:04:40] "GET /javascript/mapzen.whosonfirst.leaflet.tangram.js HTTP/1.1" 200 -
-127.0.0.1 - - [24/Oct/2015 22:04:40] "GET /javascript/mapzen.whosonfirst.geojson.js HTTP/1.1" 200 -
-127.0.0.1 - - [24/Oct/2015 22:04:40] "GET /javascript/mapzen.whosonfirst.php.js HTTP/1.1" 200 -
-127.0.0.1 - - [24/Oct/2015 22:04:40] "GET /javascript/mapzen.whosonfirst.data.js HTTP/1.1" 200 -
-127.0.0.1 - - [24/Oct/2015 22:04:40] "GET /javascript/mapzen.whosonfirst.net.js HTTP/1.1" 200 -
-127.0.0.1 - - [24/Oct/2015 22:04:40] "GET /javascript/mapzen.whosonfirst.log.js HTTP/1.1" 200 -
-127.0.0.1 - - [24/Oct/2015 22:04:40] "GET /javascript/mapzen.whosonfirst.enmapify.js HTTP/1.1" 200 -
-127.0.0.1 - - [24/Oct/2015 22:04:40] "GET /javascript/mapzen.whosonfirst.iamhere.js HTTP/1.1" 200 -
-127.0.0.1 - - [24/Oct/2015 22:04:40] "GET /tangram/refill.yaml?1445749480566 HTTP/1.1" 200 -
-127.0.0.1 - - [24/Oct/2015 22:04:40] "GET /tangram/images/poi_icons_18@2x.png HTTP/1.1" 200 -
-```
+#### data server
 
-#### Caveats
+This can be anything you want it to be, really. We have written a small HTTP-based static webserver in the `Go` programming language called `wof-fileserver` that is part of the [go-whosonfirst-fileserver](https://github.com/whosonfirst/go-whosonfirst-fileserver) repository.  You will need to download, install and configure it yourself (it's not very hard).
 
-You should treat this web server as a toy. Anecdotally it is also very finnicky. It is included in order to try and minimize the number of _other things_ you need to install on your computer in order to get the examples working. Not everyone has Python installed on their computers by default but many do. Personally I prefer [go-whosonfirst-fileserver](https://github.com/whosonfirst/go-whosonfirst-fileserver) but unless you're confortable with yet-another language (Go) and build process you probably don't want to go there.
+$> wof-fileserver -port 9999 -path /usr/local/mapzen/whosonfirst-data/data/ -cors
+
+By default everything in this repository assumes the point-in-polygon server is running on port `9999`. If you change that you will need to update the `mapzen.whosonfirst.data.endpoint` setting in config file, described below.
+
+#### file server
+
+This can be anything you want it to be, really. We have written a small HTTP-based static webserver in the `Go` programming language called `wof-fileserver` that is part of the [go-whosonfirst-fileserver](https://github.com/whosonfirst/go-whosonfirst-fileserver) repository.  You will need to download, install and configure it yourself (it's not very hard).
+
+$> wof-fileserver -port 8001 -path /usr/local/mapzen/whosonfirst-www-iamhere/www/
+
+#### mapzen.whosonfirst.config.js
+
+In the `www/javascript` folder there is a file called `mapzen.whosonfirst.config.js.sample`. Make a copy of it called `mapzen.whosonfirst.config.js`. That's it. Unless you need or want to tailor anything to your needs. Available knobs include:
+
+* Specifying a different endpoint for the point-in-polygon server
+* Specifying a different endpoint for the Who's on First data server
+* Specifying a [Pelias API key](https://mapzen.com/projects/search) if you want to enabled geocoding
+* Specifying a different endpoint for the Pelias (Mapzen Search) API (for example if you're running your own instance)
+* Toggling whether or not to display verbose logging in the web application
+
+The `mapzen.whosonfirst.config.js` file is explicitly excluded from being checked-in to the `whosonfirst-www-iamhere` repository.
 
 ### Running remotely
 
 _This section is still being written_
-
-This assumes that you have a local copy of the [whosonfirst-data]() repository on your computer. For the sake of the following examples we'll assume it is located in `/usr/local/mapzen/whosonfirst-data`.
-
-### Point-in-polygon (pip) server
-
-```
-$> pip-server -cors -data /usr/local/mapzen/whosonfirst-data/data /usr/local/mapzen/whosonfirst-data/meta/wof-neighbourhood-latest.csv /usr/local/mapzen/whosonfirst-data/meta/wof-marinearea-latest.csv 
-```
-
-### data server
-
-$> wof-fileserver -port 9999 -path /usr/local/mapzen/whosonfirst-data/data/ -cors
-
-### file server
-
-$> wof-fileserver -port 8001 -path /usr/local/mapzen/whosonfirst-www-iamhere/www/
 
 ## See also
 
