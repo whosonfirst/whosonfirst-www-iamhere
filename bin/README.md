@@ -10,8 +10,16 @@ If your operating system is not listed here [let us know](https://github.com/who
 
 ## wof-pip-server
 
+This is what you'll need to enable the point-in-polygon support in `whosonfirst-www-youarehere`. It is a command-line application that you will need to start from a terminal, passing in a number of arguments specific to your use case. For example:
+
 ```
-Usage of ./bin/osx/wof-pip-server:
+$> ./bin/osx/wof-pip-server -port 8080 -cors -data /usr/local/mapzen/whosonfirst-data/data /usr/local/mapzen/whosonfirst-data/meta/wof-neighbourhood-latest.csv /usr/local/mapzen/whosonfirst-data/meta/wof-marinearea-latest.csv 
+```
+
+The complete list of options available when starting the point-in-polygon server is included below:
+
+```
+Usage of wof-pip-server:
   -cache_size int
     	      The number of WOF records with large geometries to cache (default 1024)
   -cache_trigger int
@@ -36,16 +44,20 @@ Usage of ./bin/osx/wof-pip-server:
 	Enable really verbose logging, or log level "debug"
 ```
 
+## wof-fileserver
+
+This is a very simple HTTP file server. It is included as a convenience for people who don't want to run
+
 For example:
 
 ```
-$> ./bin/osx/wof-pip-server -port 8080 -cors -data /usr/local/mapzen/whosonfirst-data/data /usr/local/mapzen/whosonfirst-data/meta/wof-neighbourhood-latest.csv /usr/local/mapzen/whosonfirst-data/meta/wof-marinearea-latest.csv 
+$> ./bin/osx/wof-fileserver -port 8001 -path /usr/local/mapzen/whosonfirst-www-iamhere/www/
 ```
 
-## wof-fileserver
+The complete list of options available when starting the file server is included below:
 
 ```
-Usage of ./bin/osx/wof-fileserver:
+Usage of wof-fileserver:
   -cors
 	Enable CORS headers
   -path string
@@ -54,8 +66,4 @@ Usage of ./bin/osx/wof-fileserver:
     	Port to listen (default 8080)
 ```
 
-For example:
-
-```
-$> ./bin/osx/wof-fileserver -port 8001 -path /usr/local/mapzen/whosonfirst-www-iamhere/www/
-```
+## See also
