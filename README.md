@@ -35,7 +35,7 @@ Surprise! There is also a second (or fifth if you're being "fancy" about things)
 This is a small application written in the `Go` programming language that exposes point-in-polygon functionality over an HTTP API and is part of the [go-whosonfirst-pip](https://github.com/whosonfirst/go-whosonfirst-pip/) repository. _You will need to download, install and configure it yourself but [it's not very hard](https://github.com/whosonfirst/go-whosonfirst-howto)._
 
 ```
-$> pip-server -port 8080 -cors -data /usr/local/mapzen/whosonfirst-data/data /usr/local/mapzen/whosonfirst-data/meta/wof-neighbourhood-latest.csv /usr/local/mapzen/whosonfirst-data/meta/wof-marinearea-latest.csv 
+$> ./bin/osx/wof-pip-server -port 8080 -cors -data /usr/local/mapzen/whosonfirst-data/data /usr/local/mapzen/whosonfirst-data/meta/wof-neighbourhood-latest.csv /usr/local/mapzen/whosonfirst-data/meta/wof-marinearea-latest.csv 
 ```
 
 By default everything in this repository assumes the point-in-polygon server is running on port `8080`. If you change that you will need to update the `mapzen.whosonfirst.pip.endpoint` setting in config file, described below.
@@ -47,7 +47,7 @@ This can be anything you want it to be, really, just as long as the data is retu
 We have written a small HTTP-based static webserver in the `Go` programming language called `wof-fileserver` that is part of the [go-whosonfirst-fileserver](https://github.com/whosonfirst/go-whosonfirst-fileserver) repository.  _You will need to download, install and configure it yourself but [it's not very hard](https://github.com/whosonfirst/go-whosonfirst-howto)._
 
 ```
-$> wof-fileserver -port 9999 -path /usr/local/mapzen/whosonfirst-data/data/ -cors
+$> ./bin/osx/wof-fileserver -port 9999 -path /usr/local/mapzen/whosonfirst-data/data/ -cors
 ```
 
 By default everything in this repository assumes the point-in-polygon server is running on port `9999`. If you change that you will need to update the `mapzen.whosonfirst.data.endpoint` setting in config file, described below.
@@ -57,7 +57,7 @@ By default everything in this repository assumes the point-in-polygon server is 
 This can be anything you want it to be. (It doesn't even have to set `CORS` headers.) We have written a small HTTP-based static webserver in the `Go` programming language called `wof-fileserver` that is part of the [go-whosonfirst-fileserver](https://github.com/whosonfirst/go-whosonfirst-fileserver) repository.  _You will need to download, install and configure it yourself but [it's not very hard](https://github.com/whosonfirst/go-whosonfirst-howto)._
 
 ```
-$> wof-fileserver -port 8001 -path /usr/local/mapzen/whosonfirst-www-iamhere/www/
+$> ./bin/osx/wof-fileserver -port 8001 -path /usr/local/mapzen/whosonfirst-www-iamhere/www/
 ```
 
 #### mapzen.whosonfirst.config.js
