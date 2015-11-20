@@ -46,9 +46,7 @@ Usage of wof-pip-server:
 
 ## wof-fileserver
 
-This is a very simple HTTP file server. It is included as a convenience for people who don't want to run
-
-For example:
+This is a very simple HTTP file server. It is included as a convenience for people who don't want to think about running their own web server. For example:
 
 ```
 $> ./bin/osx/wof-fileserver -port 8001 -path /usr/local/mapzen/whosonfirst-www-iamhere/www/
@@ -67,3 +65,6 @@ Usage of wof-fileserver:
 ```
 
 ## See also
+
+* https://github.com/whosonfirst/go-whosonfirst-pip
+* https://github.com/whosonfirst/go-whosonfirst-fileserver
