@@ -68,7 +68,7 @@ mapzen.whosonfirst.iamhere = (function(){
 				}
 				
 				window.onresize = self.draw_crosshairs;
-				
+
 				window.ononline = self.on_online;
 				window.onoffline = self.on_offline;
 
@@ -79,7 +79,7 @@ mapzen.whosonfirst.iamhere = (function(){
 				else {
 					self.on_offline();
 				}
-				
+
 				self.draw_crosshairs();
 				self.update_location();
 				self.reverse_geocode();
@@ -87,21 +87,23 @@ mapzen.whosonfirst.iamhere = (function(){
 			},
 
 			'on_online': function(){
+
 				mapzen.whosonfirst.feedback.info("you are in online mode");
 
 				var q = document.getElementById("q");
 				q.setAttribute("placeholder", "search for a place");
+				q.removeAttribute("disabled");
+				q.value = "";
 
 				var f = document.getElementById("find");
 				f.removeAttribute("disabled");
 
 				var fm = document.getElementById("findme");
-				fm.removeAttribute("disabled");
-				f.style = "display:inline;"
-				fm.innerHTML = "⌖";
+				fm.style = "display:inline;color:#2E78A8"
 			},
 
 			'on_offline': function(){
+
 				mapzen.whosonfirst.feedback.info("you are in offline mode");
 
 				var pelias = mapzen.whosonfirst.pelias.endpoint();
@@ -109,7 +111,8 @@ mapzen.whosonfirst.iamhere = (function(){
 				if (! self.is_localhost(pelias)){
 
 					var q = document.getElementById("q");
-					q.setAttribute("placeholder", "search is disabled because you are offline");
+					q.setAttribute("placeholder", "search is disabled");
+					q.setAttribute("disabled", "disabled");
 					q.value = "";
 
 					var f = document.getElementById("find");
@@ -118,8 +121,7 @@ mapzen.whosonfirst.iamhere = (function(){
 				}
 
 				var fm = document.getElementById("findme");
-				fm.setAttribute("disabled", "disabled");
-				fm.innerHTML = "offline";
+				fm.style = "display:inline;color:#bbb"
 			},
 			
 			'is_localhost': function(url){
@@ -138,10 +140,11 @@ mapzen.whosonfirst.iamhere = (function(){
 			'geolocate': function(){
 
 				if (! navigator.onLine){
+					mapzen.whosonfirst.feedback.alert("Unable to lookup your location because you are offline");
 					return false;
 				}
 
-				var ts = mapzen.whosonfirst.feedback.persist("looking up your location");
+				var ts = mapzen.whosonfirst.feedback.persist("Looking up your location");
 
 				var update_feedback = function(){
 					mapzen.whosonfirst.feedback.remove(ts);
@@ -159,7 +162,6 @@ mapzen.whosonfirst.iamhere = (function(){
 				var on_error = function(rsp){
 
 					update_feedback();
-					console.log(rsp);
 				};
 
 				navigator.geolocation.getCurrentPosition(on_locate, on_error);
@@ -171,6 +173,7 @@ mapzen.whosonfirst.iamhere = (function(){
 				var e = mapzen.whosonfirst.pelias.endpoint();
 
 				if ((! navigator.onLine) && (! self.is_localhost(e))){
+					mapzen.whosonfirst.feedback.alert("Unable to perform your search query because you seem to be offline");
 					return false;
 				}
 
@@ -241,7 +244,7 @@ mapzen.whosonfirst.iamhere = (function(){
 				var e = mapzen.whosonfirst.pip.endpoint();
 
 				if ((! navigator.onLine) && (! self.is_localhost(e))){
-					mapzen.whosonfirst.feedback.alert("reverse geocoding is disabled because you are offline");
+					mapzen.whosonfirst.feedback.alert("Reverse geocoding is disabled because you are offline");
 					return false;
 				}
 

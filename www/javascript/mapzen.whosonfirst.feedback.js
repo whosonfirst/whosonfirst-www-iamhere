@@ -4,8 +4,8 @@ mapzen.whosonfirst = mapzen.whosonfirst || {};
 mapzen.whosonfirst.feedback = (function(){
 
 		var _timeout = undefined;
-		var _schedule = 2000;
-		var _limit = 4000;
+		var _schedule = 5000;
+		var _limit = 10000;
 
 		var self = {
 

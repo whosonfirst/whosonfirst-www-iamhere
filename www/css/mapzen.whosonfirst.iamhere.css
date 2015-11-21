@@ -98,7 +98,7 @@ text-align:center;
 }
 
 #whereami-feedback-list li {
-		   list-item-style: none;
+	  list-item-style: none !important;
 		   border: solid thin;
 		   padding:1em;
 		   padding-top:.5em;
