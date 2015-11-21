@@ -284,7 +284,7 @@ mapzen.whosonfirst.iamhere = (function(){
 						to_keep[wofid] = 1;
 					}
 				}
-				
+
 				for (var wofid in current_layers){
 					
 					if (to_keep[wofid]){
@@ -294,6 +294,8 @@ mapzen.whosonfirst.iamhere = (function(){
 					mapzen.whosonfirst.log.debug("remove layer for WOF ID " + wofid);
 
 					var layer = current_layers[wofid];
+					delete(current_layers[wofid]);
+
 					map.removeLayer(layer);
 				}
 				
@@ -307,7 +309,7 @@ mapzen.whosonfirst.iamhere = (function(){
 				
 				var count = possible.length;
 				var where = [];
-				
+	
 				for (var i=0; i < count; i++){
 					
 					var loc = possible[i];

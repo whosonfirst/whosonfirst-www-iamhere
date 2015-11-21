@@ -33,7 +33,7 @@ mapzen.whosonfirst.leaflet = (function(){
 			}
 			
 			catch (e){
-				console.log("failed to bind label because " + e);
+				mapzen.whosonfirst.log.error("failed to bind label because " + e);
 			}
 			
 			layer.addTo(map);
@@ -45,7 +45,7 @@ mapzen.whosonfirst.leaflet = (function(){
 			var bbox = mapzen.whosonfirst.geojson.derive_bbox(geojson);
 			
 			if (! bbox){
-				console.log("no bounding box");
+				mapzen.whosonfirst.log.error("no bounding box to draw");
 				return false;
 			}
 
@@ -79,7 +79,7 @@ mapzen.whosonfirst.leaflet = (function(){
 			var bbox = mapzen.whosonfirst.geojson.derive_bbox(geojson);
 
 			if (! bbox){
-				console.log("no bounding box");
+				mapzen.whosonfirst.log.error("no bounding box to fit");
 				return false;
 			}
 			
