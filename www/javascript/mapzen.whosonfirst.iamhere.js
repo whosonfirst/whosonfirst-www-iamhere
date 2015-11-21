@@ -69,13 +69,77 @@ mapzen.whosonfirst.iamhere = (function(){
 				
 				window.onresize = self.draw_crosshairs;
 				
+				window.ononline = self.on_online;
+				window.onoffline = self.on_offline;
+
+				if (navigator.onLine){
+					self.on_online();
+				}
+
+				else {
+					self.on_offline();
+				}
+				
 				self.draw_crosshairs();
 				self.update_location();
 				self.reverse_geocode();
 				
 			},
 
+			'on_online': function(){
+				mapzen.whosonfirst.log.info("you are in online mode");
+
+				var q = document.getElementById("q");
+				q.setAttribute("placeholder", "search for a place");
+
+				var f = document.getElementById("find");
+				f.removeAttribute("disabled");
+
+				var fm = document.getElementById("findme");
+				fm.removeAttribute("disabled");
+				f.style = "display:inline;"
+				fm.innerHTML = "⌖";
+			},
+
+			'on_offline': function(){
+				mapzen.whosonfirst.log.info("you are in offline mode");
+
+				var pelias = mapzen.whosonfirst.pelias.endpoint();
+
+				if (! self.is_localhost(pelias)){
+
+					var q = document.getElementById("q");
+					q.setAttribute("placeholder", "search is disabled because you are offline");
+					q.value = "";
+
+					var f = document.getElementById("find");
+					f.style = "display:none;"
+					f.setAttribute("disabled", "disabled");
+				}
+
+				var fm = document.getElementById("findme");
+				fm.setAttribute("disabled", "disabled");
+				fm.innerHTML = "offline";
+			},
+			
+			'is_localhost': function(url){
+
+				// please not like this...
+
+				var parts = url.split(":");
+
+				if (parts[1] == "//localhost"){
+					return true;
+				}
+
+				return false;
+			},
+			
 			'geolocate': function(){
+
+				if (! navigator.onLine){
+					return false;
+				}
 
 				var on_locate = function(pos){
 					var lat = pos.coords.latitude;
@@ -83,10 +147,20 @@ mapzen.whosonfirst.iamhere = (function(){
 					self.jump_to(lat, lon, 16);					
 				};
 
-				navigator.geolocation.getCurrentPosition(on_locate);
+				var on_error = function(rsp){
+					console.log(rsp);
+				};
+
+				navigator.geolocation.getCurrentPosition(on_locate, on_error);
 			},
 			
 			'search': function(){
+
+				var e = mapzen.whosonfirst.pelias.endpoint();
+
+				if ((! navigator.onLine) && (! self.is_localhost(e))){
+					return false;
+				}
 
 				var q = document.getElementById("q");
 				q = q.value
@@ -144,6 +218,13 @@ mapzen.whosonfirst.iamhere = (function(){
 			},
 
 			'reverse_geocode': function(lat, lon){
+
+				var e = mapzen.whosonfirst.pip.endpoint();
+
+				if ((! navigator.onLine) && (! self.is_localhost(e))){
+					alert("OFFLINE");
+					return false;
+				}
 
 				var ll = map.getCenter();
 				var lat = ll.lat;
@@ -231,10 +312,15 @@ mapzen.whosonfirst.iamhere = (function(){
 						
 						var props = feature['properties'];
 						var wofid = props['wof:id'];
+						var name = props['wof:name'];
+
+						feature['properties']['lflt:label_text'] = name;
 
 						mapzen.whosonfirst.log.debug("draw layer for WOF ID " + wofid);
 						
-						var style = mapzen.whosonfirst.leaflet.styles.pip_polygon()
+						var style = mapzen.whosonfirst.leaflet.styles.pip_polygon();
+						//style['weight'] = i;
+
 						var layer = mapzen.whosonfirst.leaflet.draw_poly(map, feature, style);
 						
 						current_layers[ wofid ] = layer;

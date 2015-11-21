@@ -89,3 +89,19 @@ text-align:center;
   font-size: small; 
   content: "which appears to be somewhere in ";
 }
+
+#whereami-feedback {
+		   font-size:small;
+		   max-width: 50%;
+		   margin: 0 auto;
+		   margin-top:1em;
+}
+
+#whereami-feedback-list li {
+		   list-item-style: none;
+		   border: solid thin;
+		   padding:1em;
+		   padding-top:.5em;
+		   padding-bottom:.5em;
+		   margin-bottom:.25em;
+}

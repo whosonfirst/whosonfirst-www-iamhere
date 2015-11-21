@@ -24,7 +24,7 @@ mapzen.whosonfirst.log = (function(){
 			}
 
 			var style = (show) ? "display:block" : "display:none";
-			c.setAttribute("style", style);
+			c.style = style;
 		},
 
 		'debug': function(msg){
@@ -51,7 +51,9 @@ mapzen.whosonfirst.log = (function(){
 
 			var el = self._render(msg, cls, dt);
 			self._attach(el);
-			self.show();
+
+			// var c = document.getElementById('wof-log-container');
+			// self.show();
 		},
 		
 		'_render': function(msg, cls, dt){
