@@ -13,13 +13,25 @@ mapzen.whosonfirst.feedback = (function(){
 				this.append(msg, "alert");
 			},
 
+			'debug': function(msg){
+				this.append(msg, "debug");
+			},
+
 			'info': function(msg){
 				this.append(msg, "info");
 			},
 
+			'warning': function(msg){
+				this.append(msg, "warning");
+			},
+
+			'error': function(msg){
+				this.append(msg, "warning");
+			},
+
 			'append': function(msg, cls){
 
-				mapzen.whosonfirst.log.debug(msg);
+				mapzen.whosonfirst.log.log(msg, cls);
 
 				var enc_msg = mapzen.whosonfirst.php.htmlspecialchars(msg);
 				var enc_cls = mapzen.whosonfirst.php.htmlspecialchars(cls);
@@ -109,6 +121,13 @@ mapzen.whosonfirst.feedback = (function(){
 
 				return list;
 			},
+
+			'log': function(msg, cls){
+
+				if (mapzen.whosonfirst.log){
+					mapzen.whosonfirst.log.log(msg, cls);
+				}
+			}
 		};
 	
 	return self;

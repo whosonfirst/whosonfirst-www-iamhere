@@ -64,7 +64,7 @@ mapzen.whosonfirst.log = (function(){
 			var item = document.createElement("li");
 			item.setAttribute("class", "wof-log-item wof-log-" + enc_cls);
 
-			var text = document.createTextNode(enc_msg);
+			var text = document.createTextNode(" " + enc_msg);
 
 			var span = document.createElement("span");
 			span.setAttribute("class", "wof-log-body");

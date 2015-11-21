@@ -49,12 +49,12 @@ mapzen.whosonfirst.iamhere = (function(){
 					}
 
 					else {
-						mapzen.whosonfirst.log.warning("Search is disabled because no API key has been defined");
+						mapzen.whosonfirst.feedback.warning("Search is disabled because no API key has been defined");
 					}
 				}
 
 				else {
-					mapzen.whosonfirst.log.warning("Search is disabled because no API endpoint has been defined");
+					mapzen.whosonfirst.feedback.warning("Search is disabled because no API endpoint has been defined");
 				}
 
 				if (mapzen.whosonfirst.pip.endpoint()){
@@ -64,7 +64,7 @@ mapzen.whosonfirst.iamhere = (function(){
 				}
 
 				else {
-					mapzen.whosonfirst.log.warning("Reverse geocoding is disabled because no API endpoint has been defined");
+					mapzen.whosonfirst.feedback.warning("Reverse geocoding is disabled because no API endpoint has been defined");
 				}
 				
 				window.onresize = self.draw_crosshairs;
