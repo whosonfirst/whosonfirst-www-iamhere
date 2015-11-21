@@ -141,17 +141,29 @@ mapzen.whosonfirst.iamhere = (function(){
 					return false;
 				}
 
+				var ts = mapzen.whosonfirst.feedback.persist("looking up your location");
+
+				var update_feedback = function(){
+					mapzen.whosonfirst.feedback.remove(ts);
+				};
+				
 				var on_locate = function(pos){
+
+					update_feedback();
+
 					var lat = pos.coords.latitude;
 					var lon = pos.coords.longitude;
 					self.jump_to(lat, lon, 16);					
 				};
 
 				var on_error = function(rsp){
+
+					update_feedback();
 					console.log(rsp);
 				};
 
 				navigator.geolocation.getCurrentPosition(on_locate, on_error);
+
 			},
 			
 			'search': function(){
@@ -175,6 +187,13 @@ mapzen.whosonfirst.iamhere = (function(){
 			},
 
 			'geocode': function(q){
+
+				var enc_q = mapzen.whosonfirst.php.htmlspecialchars(q);
+				var ts = mapzen.whosonfirst.feedback.persist("searching for " + enc_q);
+
+				var update_feedback = function(){
+					mapzen.whosonfirst.feedback.remove(ts);
+				}
 
 				var on_success = function(rsp){
 					self.on_geocode(rsp);

@@ -37,10 +37,11 @@ mapzen.whosonfirst.feedback = (function(){
 				var enc_cls = mapzen.whosonfirst.php.htmlspecialchars(cls);
 				var text = document.createTextNode(enc_msg);
 
-				var item = document.createElement("li");
-
 				var dt = new Date();
 				var ts = dt.toISOString();
+
+				var item = document.createElement("li");
+				item.setAttribute("id", ts);
 				item.setAttribute("ts", ts);
 				item.setAttribute("class", enc_cls);
 
@@ -50,6 +51,8 @@ mapzen.whosonfirst.feedback = (function(){
 				list.appendChild(item);
 				
 				self.schedule();
+
+				return ts;
 			},
 
 			'schedule': function(){
@@ -84,6 +87,10 @@ mapzen.whosonfirst.feedback = (function(){
 					var ts = item.getAttribute("ts");
 					var cls = item.getAttribute("cls");
 
+					if (cls == "persist"){
+						continue;
+					}
+
 					var dt = new Date(ts);
 					var diff = now - dt;
 
@@ -107,6 +114,16 @@ mapzen.whosonfirst.feedback = (function(){
 				
 			},
 			
+			'remove': function(id){
+
+				var item = document.getElementById(ts);
+
+				if (item){
+					var list = self._list();
+					list.removeChild(item);
+				}
+			},
+
 			'_list': function(){
 
 				var list = document.getElementById("whereami-feedback-list");
