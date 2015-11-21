@@ -4,12 +4,25 @@ mapzen.whosonfirst = mapzen.whosonfirst || {};
 mapzen.whosonfirst.feedback = (function(){
 
 		var _timeout = undefined;
+		var _schedule = 2000;
+		var _limit = 4000;
 
 		var self = {
 
-			'append': function(msg){
+			'alert': function(msg){
+				this.append(msg, "alert");
+			},
+
+			'info': function(msg){
+				this.append(msg, "info");
+			},
+
+			'append': function(msg, cls){
+
+				mapzen.whosonfirst.log.debug(msg);
 
 				var enc_msg = mapzen.whosonfirst.php.htmlspecialchars(msg);
+				var enc_cls = mapzen.whosonfirst.php.htmlspecialchars(cls);
 				var text = document.createTextNode(enc_msg);
 
 				var item = document.createElement("li");
@@ -17,11 +30,17 @@ mapzen.whosonfirst.feedback = (function(){
 				var dt = new Date();
 				var ts = dt.toISOString();
 				item.setAttribute("ts", ts);
+				item.setAttribute("class", enc_cls);
 
 				item.appendChild(text);
 
 				var list = self._list();
 				list.appendChild(item);
+				
+				self.schedule();
+			},
+
+			'schedule': function(){
 
 				if (_timeout){
 					// removeTimeout(_timeout);
@@ -31,7 +50,7 @@ mapzen.whosonfirst.feedback = (function(){
 
 				_timeout = setTimeout(function(){
 					_this.prune();
-				}, 10000);
+				}, _schedule);
 			},
 
 			'prune': function(){
@@ -51,14 +70,29 @@ mapzen.whosonfirst.feedback = (function(){
 					}
 
 					var ts = item.getAttribute("ts");
-					var dt = new Date(ts);
+					var cls = item.getAttribute("cls");
 
+					var dt = new Date(ts);
 					var diff = now - dt;
 
-					if (diff > 2000){
+					var limit = _limit;
+
+					if (cls == "alert"){
+						limit = limit * 2;
+					}
+
+					if (diff > limit){
 						list.removeChild(item);
 					}
 				}
+
+				var children = list.children;
+				var count = children.length;
+
+				if (count){
+					self.schedule();
+				}
+				
 			},
 			
 			'_list': function(){

@@ -87,7 +87,7 @@ mapzen.whosonfirst.iamhere = (function(){
 			},
 
 			'on_online': function(){
-				mapzen.whosonfirst.log.info("you are in online mode");
+				mapzen.whosonfirst.feedback.info("you are in online mode");
 
 				var q = document.getElementById("q");
 				q.setAttribute("placeholder", "search for a place");
@@ -102,7 +102,7 @@ mapzen.whosonfirst.iamhere = (function(){
 			},
 
 			'on_offline': function(){
-				mapzen.whosonfirst.log.info("you are in offline mode");
+				mapzen.whosonfirst.feedback.info("you are in offline mode");
 
 				var pelias = mapzen.whosonfirst.pelias.endpoint();
 
@@ -166,7 +166,7 @@ mapzen.whosonfirst.iamhere = (function(){
 				q = q.value
 				
 				if (q == ""){
-					alert("You forgot to say what you're searching for...");
+					mapzen.whosonfirst.feedback.alert("You forgot to say what you're searching for...");
 					return false;
 				}
 
@@ -222,7 +222,7 @@ mapzen.whosonfirst.iamhere = (function(){
 				var e = mapzen.whosonfirst.pip.endpoint();
 
 				if ((! navigator.onLine) && (! self.is_localhost(e))){
-					alert("OFFLINE");
+					mapzen.whosonfirst.feedback.alert("reverse geocoding is disabled because you are offline");
 					return false;
 				}
 
