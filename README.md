@@ -6,13 +6,17 @@
 
 ## Usage
 
-### Running locally - simple
+### Running locally - in "simple" mode
 
 There is one thing you need to run `whosonfirst-www-iamhere` locally in "simple" mode. Simple mode just means a map with live-updating information about its position.
 
-* An HTTP file server for the `whosonfirst-www-iamhere` itself. This is because some browsers are super conservative about what can and can't run on `localhost` (aka your local machine) and what can be served from a `file://` URL (aka your hard drive) the [tangram.js](https://github.com/tangrams/tangram) maps need to be "served" from an actual web server.
+* An HTTP file server for the `whosonfirst-www-iamhere` itself. This is because some browsers are super conservative about what can and can't run on `localhost` (aka your local machine) and what can be served from a `file://` URL (aka your hard drive) the [tangram.js](https://github.com/tangrams/tangram) maps need to be "served" from an actual web server. A very simple HTTP file server is included in this repository and discussed more in detail below.
 
-### Running locally - fancy
+### Running locally - SURPISE!!
+
+Surprise! There is also a second moving piece, which is a local (Javascript) settings file that you will need to configure by hand. Conveniently there is a sample versions which can simply rename if you want to use all the default settings.
+
+### Running locally - in "fancy" mode
 
 There are four separate components to running `whosonfirst-www-iamhere` locally in "fancy" mode. Fancy mode means a map with live-updating information about its position that will reverse-geocode those coordinates and display their corresponding Who's On First polygons. Optionally, you can also enable searching for a specific place using the [Mapzen Search API](https://mapzen.com/projects/search).
 
@@ -26,9 +30,19 @@ They are:
 
 * A copy of the [whosonfirst-data](https://github.com/whosonfirst/whosonfirst-data) repository. You don't actually need all of the data. You just need all of the files listed in the CSV file(s) that the point-in-polygon server needs to load in folder organized in the standard Who's On First `123/456/7/1234567.geojson` tree structure.
 
-### Running locally - SURPISE!!
+### Running locally - the details
 
-Surprise! There is also a second (or fifth if you're being "fancy" about things) moving part, which is a local (Javascript) settings file that you will need to configure by hand. Conveniently there is a sample versions which can simply rename if you want to use all the default settings.
+#### mapzen.whosonfirst.config.js
+
+In the `www/javascript` folder there is a file called `mapzen.whosonfirst.config.js.sample`. Make a copy of it called `mapzen.whosonfirst.config.js`. That's it. Unless you need or want to tailor anything to your needs. Available knobs include:
+
+* Specifying a different endpoint for the point-in-polygon server
+* Specifying a different endpoint for the Who's on First data server
+* Specifying a [Pelias API key](https://mapzen.com/projects/search) if you want to enabled geocoding
+* Specifying a different endpoint for the Pelias (Mapzen Search) API (for example if you're running your own instance)
+* Toggling whether or not to display verbose logging in the web application
+
+The `mapzen.whosonfirst.config.js` file is explicitly excluded from being checked-in to the `whosonfirst-www-iamhere` repository.
 
 #### wof-pip-server
 
@@ -59,26 +73,6 @@ This can be anything you want it to be. (It doesn't even have to set `CORS` head
 ```
 $> ./bin/osx/wof-fileserver -port 8001 -path /usr/local/mapzen/whosonfirst-www-iamhere/www/
 ```
-
-#### mapzen.whosonfirst.config.js
-
-In the `www/javascript` folder there is a file called `mapzen.whosonfirst.config.js.sample`. Make a copy of it called `mapzen.whosonfirst.config.js`. That's it. Unless you need or want to tailor anything to your needs. Available knobs include:
-
-* Specifying a different endpoint for the point-in-polygon server
-* Specifying a different endpoint for the Who's on First data server
-* Specifying a [Pelias API key](https://mapzen.com/projects/search) if you want to enabled geocoding
-* Specifying a different endpoint for the Pelias (Mapzen Search) API (for example if you're running your own instance)
-* Toggling whether or not to display verbose logging in the web application
-
-The `mapzen.whosonfirst.config.js` file is explicitly excluded from being checked-in to the `whosonfirst-www-iamhere` repository.
-
-### Running remotely
-
-_This section is still being written_
-
-## Caveats
-
-This mostly works but is still a work-in-progress.
 
 ## See also
 
