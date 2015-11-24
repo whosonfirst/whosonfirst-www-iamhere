@@ -29,6 +29,10 @@ mapzen.whosonfirst.feedback = (function(){
 				this.append(msg, "warning");
 			},
 
+			'persist': function(msg){
+				this.append(msg, "persist");
+			},
+
 			'append': function(msg, cls){
 
 				mapzen.whosonfirst.log.log(msg, cls);
