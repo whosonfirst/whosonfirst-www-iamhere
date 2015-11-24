@@ -34,12 +34,18 @@ if __name__ == '__main__':
     bin = os.path.join(root, "bin")
     www = os.path.join(root, "www")
     
-    # please to check for linux and windows
-
     if whatami == 'darwin':
         bin = os.path.join(bin, "osx")
+    elif whatami == 'windows':
+        bin = os.path.join(bin, "win32")
+    elif whatami == 'linux':
+        bin = os.path.join(bin, "linux")        
     else:
-        logging.error("unsupported platform")
+        logging.error("unknown or unsupported platform: %s" % whatami)
+        sys.exit()
+
+    if len(args) == 0:
+        logging.error("you forgot to specify any meta files to load")
         sys.exit()
 
     pip_server = os.path.join(bin, "wof-pip-server")
