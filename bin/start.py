@@ -48,13 +48,15 @@ if __name__ == '__main__':
     pip_cmd = [pip_server, "-cors", "-port", "8080", "-data", options.data]
     pip_cmd.extend(args)
 
-    data_cmd = [file_server, "-cors", "-port", "9999", options.data]
+    data_cmd = [file_server, "-cors", "-port", "9999", "-path", options.data]
 
-    www_cmd = [file_server, "-port", "8001", www]
+    www_cmd = [file_server, "-port", "8001", "-path", www]
 
     logging.debug(" ".join(pip_cmd))
     logging.debug(" ".join(data_cmd))
     logging.debug(" ".join(www_cmd))
+
+    # sys.exit()
 
     pip = subprocess.Popen(pip_cmd)
     data = subprocess.Popen(data_cmd)
