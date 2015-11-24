@@ -60,20 +60,21 @@ if __name__ == '__main__':
     data = subprocess.Popen(data_cmd)
     www = subprocess.Popen(www_cmd)
 
-    whirr = True
-
     def signal_handler(signal, frame):
 
         pip.terminate()
         data.terminate()
         www.terminate()
 
-        whirr = False
+        raise Exception, "all done"
 
     signal.signal(signal.SIGINT, signal_handler)
 
-    while whirr:
-        time.sleep(.5)
+    try:
+        while True:
+            time.sleep(.5)
+    except Exception, e:
+        pass
 
     logging.info("all done")
     sys.exit()
