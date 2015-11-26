@@ -34,7 +34,7 @@ They are:
 
 #### mapzen.whosonfirst.config.js
 
-In the `www/javascript` folder there is a file called `mapzen.whosonfirst.config.js.sample`. Make a copy of it called `mapzen.whosonfirst.config.js`. That's it. Unless you need or want to tailor anything to your needs. Available knobs include:
+In the `www/javascript` folder there is a file called `mapzen.whosonfirst.config.js.example`. Make a copy of it called `mapzen.whosonfirst.config.js`. That's it. Unless you need or want to tailor anything to your needs. Available knobs include:
 
 * Specifying a different endpoint for the point-in-polygon server
 * Specifying a different endpoint for the Who's on First data server
@@ -64,7 +64,7 @@ We have written a small HTTP-based static webserver in the `Go` programming lang
 $> ./bin/osx/wof-fileserver -port 9999 -path /usr/local/mapzen/whosonfirst-data/data/ -cors
 ```
 
-By default everything in this repository assumes the point-in-polygon server is running on port `9999`. If you change that you will need to update the `mapzen.whosonfirst.data.endpoint` setting in config file, described below.
+By default everything in this repository assumes the data server is running on port `9999`. If you change that you will need to update the `mapzen.whosonfirst.data.endpoint` setting in config file, described below.
 
 #### file server
 
