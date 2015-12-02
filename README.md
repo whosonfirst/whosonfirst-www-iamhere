@@ -28,17 +28,17 @@ You will start to see a lot of logging sent to your terminal as the point-in-pol
 
 Once it's finished point your web browser to `http://localhost:8001/` and start looking around!
 
-### "simple" mode
+### "simple" mode - the basics
 
 There is one thing you need to run `whosonfirst-www-iamhere` locally in "simple" mode. Simple mode just means a map with live-updating information about its position.
 
 * An HTTP file server for the `whosonfirst-www-iamhere` itself. This is because some browsers are super conservative about what can and can't run on `localhost` (aka your local machine) and what can be served from a `file://` URL (aka your hard drive) the [tangram.js](https://github.com/tangrams/tangram) maps need to be "served" from an actual web server. A very simple HTTP file server is included in this repository and discussed more in detail below.
 
-### "simple" mode - is a little less simple
+### "simple" mode - the details
 
 Surprise! There is also a second moving piece, which is a local (Javascript) settings file that you will need to configure by hand. Conveniently there is a sample versions which can simply rename if you want to use all the default settings.
 
-### "fancy" mode
+### "fancy" mode - the basics
 
 There are four separate components to running `whosonfirst-www-iamhere` locally in "fancy" mode. Fancy mode means a map with live-updating information about its position that will reverse-geocode those coordinates and display their corresponding Who's On First polygons. Optionally, you can also enable searching for a specific place using the [Mapzen Search API](https://mapzen.com/projects/search).
 
@@ -52,7 +52,7 @@ They are:
 
 * A copy of the [whosonfirst-data](https://github.com/whosonfirst/whosonfirst-data) repository. You don't actually need all of the data. You just need all of the files listed in the CSV file(s) that the point-in-polygon server needs to load in folder organized in the standard Who's On First `123/456/7/1234567.geojson` tree structure.
 
-### Running locally - the details
+### "fancy" mode - the details
 
 #### mapzen.whosonfirst.config.js
 
