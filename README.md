@@ -16,15 +16,15 @@ Using `start.py` will require a few things that are outside the scope of this do
 2. That you have a copy of Python installed on your computer. If you are using Linux or a Mac it comes pre-installed.
 3. That you have "checked out" a copy of the [whosonfirst-data](git@github.com:whosonfirst/whosonfirst-data.git) to your computer.
 
-Okay, once that's all done this is all you should need to do to get started is type the following from the command line:
+Assuming all of those things all you should need to do to get started is type the following from the command line:
 
 ```
 ./bin/start.py -d /path/to/your/whosonfirst-data/data /path/to/your/whosonfirst-data/meta/wof-neighbourhood-latest.csv /path/to/your/whosonfirst-data/meta/wof-locality-latest.csv
 ```
 
-_You can pass as many "meta" files as you want. Each record in each each meta file will be indexed and be query-able by `whosonfirst-www-iamhere`._
+See the way you are passing one or more "meta" files? Those are just CSV files included in the `whosonfirst-data` repository with pointers to Who's On First records of a particular placetype. You can pass as many "meta" files as you want. Each record in each each meta file will be indexed and be query-able by `whosonfirst-www-iamhere`.
 
-You will start to see a lot of logging sent to your terminal as the point-in-polygon server indexes your Who's On First data. Depending on how many meta files you've chosen to index and how many records they contain (and what kind of computer you're using) this process can take between 30 seconds to three or four minutes to complete.
+After you run `start.py` you should start to see a lot of logging sent to your terminal as the point-in-polygon server indexes your Who's On First data. Depending on how many meta files you've chosen to index and how many records they contain (and what kind of computer you're using) this process can take between 30 seconds to three or four minutes to complete.
 
 Once it's finished point your web browser to `http://localhost:8001/` and start looking around!
 
