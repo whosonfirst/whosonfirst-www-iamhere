@@ -6,9 +6,9 @@
 
 ## Usage
 
-### tl;dr
+### start.py - aka "fancy" mode in disguise
 
-Run the `bin/start.py` command from the command line. This will start all the pieces needed to run `whosonfirst-www-iamhere` in "fancy" mode (which is [described in detail](https://github.com/whosonfirst/whosonfirst-www-iamhere/tree/master#running-locally---in-fancy-mode) below.
+Run the `bin/start.py` command from the command line. This will start all the pieces needed to run `whosonfirst-www-iamhere` in "fancy" mode (which is [described in detail](https://github.com/whosonfirst/whosonfirst-www-iamhere/tree/master#fancy-mode) below.
 
 Using `start.py` will require a few things that are outside the scope of this document:
 
@@ -28,17 +28,17 @@ You will start to see a lot of logging sent to your terminal as the point-in-pol
 
 Once it's finished point your web browser to `http://localhost:8001/` and start looking around!
 
-### Running locally - in "simple" mode
+### "simple" mode
 
 There is one thing you need to run `whosonfirst-www-iamhere` locally in "simple" mode. Simple mode just means a map with live-updating information about its position.
 
 * An HTTP file server for the `whosonfirst-www-iamhere` itself. This is because some browsers are super conservative about what can and can't run on `localhost` (aka your local machine) and what can be served from a `file://` URL (aka your hard drive) the [tangram.js](https://github.com/tangrams/tangram) maps need to be "served" from an actual web server. A very simple HTTP file server is included in this repository and discussed more in detail below.
 
-### Running locally - SURPISE!!
+### "simple" mode - is a little less simple
 
 Surprise! There is also a second moving piece, which is a local (Javascript) settings file that you will need to configure by hand. Conveniently there is a sample versions which can simply rename if you want to use all the default settings.
 
-### Running locally - in "fancy" mode
+### "fancy" mode
 
 There are four separate components to running `whosonfirst-www-iamhere` locally in "fancy" mode. Fancy mode means a map with live-updating information about its position that will reverse-geocode those coordinates and display their corresponding Who's On First polygons. Optionally, you can also enable searching for a specific place using the [Mapzen Search API](https://mapzen.com/projects/search).
 

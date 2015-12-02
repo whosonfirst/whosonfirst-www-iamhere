@@ -7,8 +7,9 @@ import logging
 import subprocess
 import signal
 import time
+import shutil
 
-# please rewrite me in go (so it can be cross-compiled)
+# please rewrite me in go (so it can be cross-compiled) ... maybe?
 
 if __name__ == '__main__':
 
@@ -33,7 +34,18 @@ if __name__ == '__main__':
 
     bin = os.path.join(root, "bin")
     www = os.path.join(root, "www")
-    
+
+    js = os.path.join(www, "javascript")
+    cfg = os.path.join(js, "mapzen.whosonfirst.config.js")
+
+    if not os.path.exists(cfg):
+
+        example = cfg + ".example"
+
+        if not shutil.copy(example, cfg):
+            logging.error("failed to copy %s to %s!" % (example, cfg))
+            sys.exit()
+
     if whatami == 'darwin':
         bin = os.path.join(bin, "osx")
     elif whatami == 'windows':
