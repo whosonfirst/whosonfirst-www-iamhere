@@ -8,7 +8,7 @@
 
 ### start.py - aka "fancy" mode in disguise
 
-Run the `bin/start.py` command from the command line. This will start all the pieces needed to run `whosonfirst-www-iamhere` in "fancy" mode (which is [described in detail](https://github.com/whosonfirst/whosonfirst-www-iamhere/tree/master#fancy-mode) below.
+From this directory run the [bin/start.py](bin/start.py) command from the command line. This will start all the pieces needed to run `whosonfirst-www-iamhere` in "fancy" mode (which is [described in detail](https://github.com/whosonfirst/whosonfirst-www-iamhere/tree/master#fancy-mode) below.
 
 Using `start.py` will require a few things that are outside the scope of this document:
 
