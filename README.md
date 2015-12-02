@@ -24,7 +24,7 @@ Okay, once that's all done this is all you should need to do to get started is t
 
 _You can pass as many "meta" files as you want. Each record in each each meta file will be indexed and be query-able by `whosonfirst-www-iamhere`._
 
-You will start to see a lot of logging sent to your terminal as the point-in-polygon server indexes your Who's On First data. Depending on how many meta files you've chosen to index and how many records they contain (and what kind of computer you're using) this process can take between 30 seconds and a couple minutes to complete.
+You will start to see a lot of logging sent to your terminal as the point-in-polygon server indexes your Who's On First data. Depending on how many meta files you've chosen to index and how many records they contain (and what kind of computer you're using) this process can take between 30 seconds to three or four minutes to complete.
 
 Once it's finished point your web browser to `http://localhost:8001/` and start looking around!
 
