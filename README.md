@@ -8,7 +8,9 @@
 
 ### tl;dr
 
-Run the `bin/start.py` command from the command line. This will require a few things that are outside the scope of this document:
+Run the `bin/start.py` command from the command line. This will start all the pieces needed to run `whosonfirst-www-iamhere` in "fancy" mode (which is [described in detail](https://github.com/whosonfirst/whosonfirst-www-iamhere/tree/master#running-locally---in-fancy-mode) below.
+
+Using `start.py` will require a few things that are outside the scope of this document:
 
 1. That you know what the command line is and are comfortable using it.
 2. That you have a copy of Python installed on your computer. If you are using Linux or a Mac it comes pre-installed.
