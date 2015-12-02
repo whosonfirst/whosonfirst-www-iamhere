@@ -10,19 +10,21 @@
 
 Run the `bin/start.py` command from the command line. This will require a few things that are outside the scope of this document:
 
-1. That you know what the command line is and are comfortable using.
+1. That you know what the command line is and are comfortable using it.
 2. That you have a copy of Python installed on your computer. If you are using Linux or a Mac it comes pre-installed.
 3. That you have "checked out" a copy of the [whosonfirst-data](git@github.com:whosonfirst/whosonfirst-data.git) to your computer.
 
-Okay, once that's all done this is all you should need to do to get started:
+Okay, once that's all done this is all you should need to do to get started is type the following from the command line:
 
 ```
 ./bin/start.py -d /path/to/your/whosonfirst-data/data /path/to/your/whosonfirst-data/meta/wof-neighbourhood-latest.csv /path/to/your/whosonfirst-data/meta/wof-locality-latest.csv
 ```
 
-_Note: You can pass as many "meta" files as you want. Each record in each each meta file will be indexed and be query-able by `whosonfirst-www-iamhere`._
+_You can pass as many "meta" files as you want. Each record in each each meta file will be indexed and be query-able by `whosonfirst-www-iamhere`._
 
-Now point your web browser to `http://localhost:8001/` and start looking around!
+You will start to see a lot of logging sent to your terminal as the point-in-polygon server indexes your Who's On First data. Depending on how many meta files you've chosen to index and how many records they contain (and what kind of computer you're using) this process can take between 30 seconds and a couple minutes to complete.
+
+Once it's finished point your web browser to `http://localhost:8001/` and start looking around!
 
 ### Running locally - in "simple" mode
 
