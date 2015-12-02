@@ -6,6 +6,24 @@
 
 ## Usage
 
+### tl;dr
+
+Run the `bin/start.py` command from the command line. This will require a few things that are outside the scope of this document:
+
+1. That you know what the command line is and are comfortable using.
+2. That you have a copy of Python installed on your computer. If you are using Linux or a Mac it comes pre-installed.
+3. That you have "checked out" a copy of the [whosonfirst-data](git@github.com:whosonfirst/whosonfirst-data.git) to your computer.
+
+Okay, once that's all done this is all you should need to do to get started:
+
+```
+./bin/start.py -d /path/to/your/whosonfirst-data/data /path/to/your/whosonfirst-data/meta/wof-neighbourhood-latest.csv /path/to/your/whosonfirst-data/meta/wof-locality-latest.csv
+```
+
+_Note: You can pass as many "meta" files as you want. Each record in each each meta file will be indexed and be query-able by `whosonfirst-www-iamhere`._
+
+Now point your web browser to `http://localhost:8001/` and start looking around!
+
 ### Running locally - in "simple" mode
 
 There is one thing you need to run `whosonfirst-www-iamhere` locally in "simple" mode. Simple mode just means a map with live-updating information about its position.
