@@ -50,7 +50,7 @@ if __name__ == '__main__':
         bin = os.path.join(bin, "osx")
     elif whatami == 'windows':
         bin = os.path.join(bin, "win32")
-    elif whatami == 'linux':
+    elif whatami == 'linux' or whatami == 'linux2':	# what is linux2???
         bin = os.path.join(bin, "linux")        
     else:
         logging.error("unknown or unsupported platform: %s" % whatami)
