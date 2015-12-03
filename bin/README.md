@@ -64,7 +64,26 @@ Usage of wof-fileserver:
     	Port to listen (default 8080)
 ```
 
+## wof-clone-metafiles
+
+This is a tool for downloading and storing Who's On First documents defined in one or more ["meta" files](https://github.com/whosonfirst/whosonfirst-data/tree/master/meta).
+
+```
+Usage of ./bin/osx/wof-clone-metafiles:
+  -dest string
+    	Where to write files
+  -loglevel string
+    	    The level of detail for logging (default "info")
+  -procs int
+    	 The number of concurrent processes to clone data with (default 8)
+  -skip-existing
+	Skip existing files on disk (without checking for remote changes)
+  -source string
+    	  Where to look for files (default "https://whosonfirst.mapzen.com/data/")
+```
+
 ## See also
 
 * https://github.com/whosonfirst/go-whosonfirst-pip
 * https://github.com/whosonfirst/go-whosonfirst-fileserver
+* https://github.com/whosonfirst/go-whosonfirst-clone
