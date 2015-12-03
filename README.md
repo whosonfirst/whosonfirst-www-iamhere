@@ -14,9 +14,9 @@ Using `start.py` will require a few things that are outside the scope of this do
 
 1. That you know what the command line is and are comfortable using it.
 2. That you have a copy of Python installed on your computer. If you are using Linux or a Mac it comes pre-installed.
-3. That you have "checked out" a copy of the [whosonfirst-data](git@github.com:whosonfirst/whosonfirst-data.git) to your computer.
+3. That you have "checked out" a copy of the [whosonfirst-data](https://github.com/whosonfirst/whosonfirst-data) to your computer.
 
-Assuming all of those things all you should need to do to get started is type the following from the command line:
+Assuming those things all you should need to do to get started is type the following from the command line:
 
 ```
 ./bin/start.py -d /path/to/your/whosonfirst-data/data /path/to/your/whosonfirst-data/meta/wof-neighbourhood-latest.csv /path/to/your/whosonfirst-data/meta/wof-locality-latest.csv
@@ -32,7 +32,7 @@ Once it's finished point your web browser to `http://localhost:8001/` and start 
 
 There is one thing you need to run `whosonfirst-www-iamhere` locally in "simple" mode. Simple mode just means a map with live-updating information about its position.
 
-* An HTTP file server for the `whosonfirst-www-iamhere` itself. This is because some browsers are super conservative about what can and can't run on `localhost` (aka your local machine) and what can be served from a `file://` URL (aka your hard drive). In our case that means the [tangram.js](https://github.com/tangrams/tangram) maps need to be "served" from an actual web server. A very simple HTTP file server is included in this repository and discussed more in detail below.
+* An HTTP file server for the `whosonfirst-www-iamhere` itself. This is because some browsers are super conservative about what can and can't run on `localhost` (aka your local machine) and what can be served from a `file://` URL (aka your hard drive). In our case that means the [tangram.js](https://github.com/tangrams/tangram) library for rendering maps need to be "served" from an actual web server. A very simple HTTP file server is included in this repository and discussed more in detail below.
 
 ### "simple" mode - the details
 
@@ -44,7 +44,7 @@ There are four separate components to running `whosonfirst-www-iamhere` locally 
 
 They are:
 
-* An HTTP file server for the `whosonfirst-www-iamhere` itself. This is because some browsers are super conservative about what can and can't run on `localhost` (aka your local machine) and what can be served from a `file://` URL (aka your hard drive) the [tangram.js](https://github.com/tangrams/tangram) maps need to be "served" from an actual web server.  _This is discussed further below._
+* An HTTP file server for the `whosonfirst-www-iamhere` itself. This is because some browsers are super conservative about what can and can't run on `localhost` (aka your local machine) and what can be served from a `file://` URL (aka your hard drive). In our case that means the [tangram.js](https://github.com/tangrams/tangram) library for rendering maps need to be "served" from an actual web server. A very simple HTTP file server is included in this repository and discussed more in detail below.
 
 * An HTTP file server (that can set `CORS` headers) for the serving Who's On First data. _This is discussed further below._
 
@@ -68,7 +68,7 @@ The `mapzen.whosonfirst.config.js` file is explicitly excluded from being checke
 
 #### wof-pip-server
 
-This is a small application written in the `Go` programming language that exposes point-in-polygon functionality over an HTTP API and is part of the [go-whosonfirst-pip](https://github.com/whosonfirst/go-whosonfirst-pip/) repository. Pre-compiled binary versions of `wof-pip-server` are available for three operating systems (OS X, Linux and Windows) in the [bin](bin) directory.
+This is a small application written in the `Go` programming language that exposes point-in-polygon functionality over an HTTP API and is part of the [go-whosonfirst-pip](https://github.com/whosonfirst/go-whosonfirst-pip/) repository. _Pre-compiled binary versions of `wof-pip-server` are available for three operating systems (OS X, Linux and Windows) in the [bin](bin) directory._
 
 ```
 $> ./bin/osx/wof-pip-server -port 8080 -cors -data /usr/local/mapzen/whosonfirst-data/data /usr/local/mapzen/whosonfirst-data/meta/wof-neighbourhood-latest.csv /usr/local/mapzen/whosonfirst-data/meta/wof-marinearea-latest.csv 
@@ -80,7 +80,7 @@ By default everything in this repository assumes the point-in-polygon server is 
 
 This can be anything you want it to be, really, just as long as the data is returned with the `CORS` headers enabled.
 
-We have written a small HTTP-based static webserver in the `Go` programming language called `wof-fileserver` that is part of the [go-whosonfirst-fileserver](https://github.com/whosonfirst/go-whosonfirst-fileserver) repository. Pre-compiled binary versions of `wof-fileservers` are available for three operating systems (OS X, Linux and Windows) in the [bin](bin) directory.
+We have written a small HTTP-based static webserver in the `Go` programming language called `wof-fileserver` that is part of the [go-whosonfirst-fileserver](https://github.com/whosonfirst/go-whosonfirst-fileserver) repository. _Pre-compiled binary versions of `wof-fileservers` are available for three operating systems (OS X, Linux and Windows) in the [bin](bin) directory._
 
 ```
 $> ./bin/osx/wof-fileserver -port 9999 -path /usr/local/mapzen/whosonfirst-data/data/ -cors
@@ -90,7 +90,7 @@ By default everything in this repository assumes the data server is running on p
 
 #### file server
 
-This can be anything you want it to be. (It doesn't even have to set `CORS` headers.) We have written a small HTTP-based static webserver in the `Go` programming language called `wof-fileserver` that is part of the [go-whosonfirst-fileserver](https://github.com/whosonfirst/go-whosonfirst-fileserver) repository.  Pre-compiled binary versions of `wof-fileservers` are available for three operating systems (OS X, Linux and Windows) in the [bin](bin) directory.
+This can be anything you want it to be. (It doesn't even have to set `CORS` headers.) We have written a small HTTP-based static webserver in the `Go` programming language called `wof-fileserver` that is part of the [go-whosonfirst-fileserver](https://github.com/whosonfirst/go-whosonfirst-fileserver) repository.  _Pre-compiled binary versions of `wof-fileserver` are available for three operating systems (OS X, Linux and Windows) in the [bin](bin) directory._
 
 ```
 $> ./bin/osx/wof-fileserver -port 8001 -path /usr/local/mapzen/whosonfirst-www-iamhere/www/
@@ -98,9 +98,13 @@ $> ./bin/osx/wof-fileserver -port 8001 -path /usr/local/mapzen/whosonfirst-www-i
 
 ## Data sources
 
-The [whosonfirst-data](https://github.com/whosonfirst/whosonfirst-data) dataset is large and not everyone may need or want to download all of it just to use `whosonfirst-www-iamhere`.
+The [whosonfirst-data](https://github.com/whosonfirst/whosonfirst-data) dataset is large and not everyone may need or want to download all of it just to use `whosonfirst-www-iamhere`. We've included a pre-compiled binary verion of the `wof-clone-metafiles` program – again, available for OS X, Windows and Linux – that allows you to import a subset of Who's On First data defined in one or more "meta" files. Meta files are just CSV files which contain paths to specific Who's On First records.
+
+The Who's On First project produces meta files for each of the placetypes in the [WOF hierarchy](https://github.com/whosonfirst/whosonfirst-placetypes).
 
 ### Using wof-clone-metafiles
+
+In this example we will download the meta file for regions from the [whosonfirst-data](https://github.com/whosonfirst/whosonfirst-data) repository and use that as the input to the `wof-clone-metafiles` program. Like this:
 
 ```
 $> wget https://raw.githubusercontent.com/whosonfirst/whosonfirst-data/master/meta/wof-region-latest.csv
