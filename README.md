@@ -128,7 +128,7 @@ Then you would run the `start.py` program (described above) specifying the `tmp`
 
 Finally point your web browser at `http://localhost:8001` and start poking around the regions!
 
-_Note: As of this writing the steps described above have not been integrated in the `start.py` script. They should be and they will be... but that work hasn't happened yet._
+_Note: As of this writing the steps described above have not been integrated in the `start.py` script. They should be and they will be... but that work [hasn't happened yet](https://github.com/whosonfirst/whosonfirst-www-iamhere/issues/7)._
 
 ## See also
 
