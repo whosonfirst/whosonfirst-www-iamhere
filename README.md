@@ -16,7 +16,7 @@ Using `start.py` will require a few things that are outside the scope of this do
 2. That you have a copy of Python installed on your computer. If you are using Linux or a Mac it comes pre-installed.
 3. That you have "checked out" a copy of the [whosonfirst-data](https://github.com/whosonfirst/whosonfirst-data) to your computer.
 
-_Or: If you don't want to download the entire WOF dataset take a look at the [data source section of this README](#data-sources) for instructions on how to get started with just a slice of the WOF data._
+_Or: If you don't want to download the entire WOF dataset take a look at the [Data sources section of this README](#data-sources) for instructions on how to get started with just a slice of the WOF data._
 
 Assuming those things all you should need to do to get started is type the following from the command line:
 
