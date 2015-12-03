@@ -14,7 +14,7 @@ Using `start.py` will require a few things that are outside the scope of this do
 
 1. That you know what the command line is and are comfortable using it.
 2. That you have a copy of Python installed on your computer. If you are using Linux or a Mac it comes pre-installed.
-3. That you have "checked out" a copy of the [whosonfirst-data](https://github.com/whosonfirst/whosonfirst-data) to your computer.
+3. That you have "checked out" a copy of the [whosonfirst-data](https://github.com/whosonfirst/whosonfirst-data) to your computer. _Or: If you don't want to download the entire WOF dataset take a look at the [data source section of this README](#data-sources) for instructions on how to get started with just a slice of the WOF data._
 
 Assuming those things all you should need to do to get started is type the following from the command line:
 
@@ -108,12 +108,23 @@ In this example we will download the meta file for regions from the [whosonfirst
 
 ```
 $> wget https://raw.githubusercontent.com/whosonfirst/whosonfirst-data/master/meta/wof-region-latest.csv
-$> ./bin/osx/wof-clone-metafiles -dest /path/to/your/whosonfirst-data wof-region-latest.csv
+$> ./bin/osx/wof-clone-metafiles -dest tmp wof-region-latest.csv
 ```
 
+This will do two things:
+
+1. Download a copy of the `wof-region-latest.csv` meta file and store in the current working directory
+2. Tell the `wof-clone-metafiles` program to read that meta file and fetch all the records listed, saving them to a `tmp` folder (in the current working directory)
+
+Then you would run the `start.py` program (described above) specifying the `tmp` folder and `wof-region-latest.csv` as arguments. Like this:
+
 ```
-./bin/start.py -d /path/to/your/whosonfirst-data/ wof-region-latest.csv
+./bin/start.py -d tmp wof-region-latest.csv
 ```
+
+Finally point your web browser at `http://localhost:8001` and start poking around the regions!
+
+_Note: As of this writing the steps described above have not been integrated in the `start.py` script. They should be and they will be... but that work hasn't happened yet._
 
 ## See also
 
