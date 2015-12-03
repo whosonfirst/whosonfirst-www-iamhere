@@ -116,4 +116,4 @@ $> ./bin/osx/wof-clone-metafiles -dest /path/to/your/whosonfirst-data wof-region
 * https://github.com/whosonfirst/whosonfirst-data
 * https://github.com/whosonfirst/go-whosonfirst-pip
 * https://github.com/whosonfirst/go-whosonfirst-fileserver
-* https://github.com/whosonfirst/go-whosonfirst-howto
+* https://github.com/whosonfirst/go-whosonfirst-clone
