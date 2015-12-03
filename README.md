@@ -96,6 +96,21 @@ This can be anything you want it to be. (It doesn't even have to set `CORS` head
 $> ./bin/osx/wof-fileserver -port 8001 -path /usr/local/mapzen/whosonfirst-www-iamhere/www/
 ```
 
+## Data sources
+
+The [whosonfirst-data](https://github.com/whosonfirst/whosonfirst-data) dataset is large and not everyone may need or want to download all of it just to use `whosonfirst-www-iamhere`.
+
+### Using wof-clone-metafiles
+
+```
+$> wget https://raw.githubusercontent.com/whosonfirst/whosonfirst-data/master/meta/wof-region-latest.csv
+$> ./bin/osx/wof-clone-metafiles -dest /path/to/your/whosonfirst-data wof-region-latest.csv
+```
+
+```
+./bin/start.py -d /path/to/your/whosonfirst-data/ wof-region-latest.csv
+```
+
 ## See also
 
 * https://github.com/whosonfirst/whosonfirst-data
