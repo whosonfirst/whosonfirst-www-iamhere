@@ -41,8 +41,10 @@ if __name__ == '__main__':
     if not os.path.exists(cfg):
 
         example = cfg + ".example"
+        shutil.copy(example, cfg)
 
-        if not shutil.copy(example, cfg):
+        if not os.path.exists(cfg):
+
             logging.error("failed to copy %s to %s!" % (example, cfg))
             sys.exit()
 
