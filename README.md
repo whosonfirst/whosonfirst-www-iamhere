@@ -32,11 +32,11 @@ Once it's finished point your web browser to `http://localhost:8001/` and start 
 
 There is one thing you need to run `whosonfirst-www-iamhere` locally in "simple" mode. Simple mode just means a map with live-updating information about its position.
 
-* An HTTP file server for the `whosonfirst-www-iamhere` itself. This is because some browsers are super conservative about what can and can't run on `localhost` (aka your local machine) and what can be served from a `file://` URL (aka your hard drive) the [tangram.js](https://github.com/tangrams/tangram) maps need to be "served" from an actual web server. A very simple HTTP file server is included in this repository and discussed more in detail below.
+* An HTTP file server for the `whosonfirst-www-iamhere` itself. This is because some browsers are super conservative about what can and can't run on `localhost` (aka your local machine) and what can be served from a `file://` URL (aka your hard drive). In our case that means the [tangram.js](https://github.com/tangrams/tangram) maps need to be "served" from an actual web server. A very simple HTTP file server is included in this repository and discussed more in detail below.
 
 ### "simple" mode - the details
 
-Surprise! There is also a second moving piece, which is a local (Javascript) settings file that you will need to configure by hand. Conveniently there is a sample versions which can simply rename if you want to use all the default settings.
+Surprise! There is also a second moving piece, which is a local (Javascript) settings file that you will need to configure by hand. Conveniently there is a sample version in the `www/javascript` folder. If you just want to use the default settings simply make a copy of the `mapzen.whosonfirst.config.js.example` and rename it as `mapzen.whosonfirst.config.js`.
 
 ### "fancy" mode - the basics
 
