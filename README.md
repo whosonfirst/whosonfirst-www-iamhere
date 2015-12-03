@@ -14,7 +14,9 @@ Using `start.py` will require a few things that are outside the scope of this do
 
 1. That you know what the command line is and are comfortable using it.
 2. That you have a copy of Python installed on your computer. If you are using Linux or a Mac it comes pre-installed.
-3. That you have "checked out" a copy of the [whosonfirst-data](https://github.com/whosonfirst/whosonfirst-data) to your computer. _Or: If you don't want to download the entire WOF dataset take a look at the [data source section of this README](#data-sources) for instructions on how to get started with just a slice of the WOF data._
+3. That you have "checked out" a copy of the [whosonfirst-data](https://github.com/whosonfirst/whosonfirst-data) to your computer.
+
+_Or: If you don't want to download the entire WOF dataset take a look at the [data source section of this README](#data-sources) for instructions on how to get started with just a slice of the WOF data._
 
 Assuming those things all you should need to do to get started is type the following from the command line:
 
@@ -98,9 +100,11 @@ $> ./bin/osx/wof-fileserver -port 8001 -path /usr/local/mapzen/whosonfirst-www-i
 
 ## Data sources
 
-The [whosonfirst-data](https://github.com/whosonfirst/whosonfirst-data) dataset is large and not everyone may need or want to download all of it just to use `whosonfirst-www-iamhere`. We've included a pre-compiled binary verion of the `wof-clone-metafiles` program – again, available for OS X, Windows and Linux – that allows you to import a subset of Who's On First data defined in one or more "meta" files. Meta files are just CSV files which contain paths to specific Who's On First records.
+The [whosonfirst-data](https://github.com/whosonfirst/whosonfirst-data) dataset is large and not everyone may need or want to download all of it just to use `whosonfirst-www-iamhere`.
 
-The Who's On First project produces meta files for each of the placetypes in the [WOF hierarchy](https://github.com/whosonfirst/whosonfirst-placetypes).
+We've included a pre-compiled binary verion of the `wof-clone-metafiles` program – again, available for OS X, Windows and Linux – that allows you to import a subset of Who's On First data defined in one or more "meta" files. Meta files are just CSV files which contain paths to specific Who's On First records.
+
+_The Who's On First project produces meta files for each of the placetypes in the [WOF hierarchy](https://github.com/whosonfirst/whosonfirst-placetypes) but you could create a meta file for any arbitrary grouping of records._
 
 ### Using wof-clone-metafiles
 
