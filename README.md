@@ -130,6 +130,19 @@ Finally point your web browser at `http://localhost:8001` and start poking aroun
 
 _Note: As of this writing the steps described above have not been integrated in the `start.py` script. They should be and they will be... but that work [hasn't happened yet](https://github.com/whosonfirst/whosonfirst-www-iamhere/issues/7)._
 
+## Non-WOF data sources
+
+`whosonfirst-www-iamhere` is designed to work with data sources (collections of GeoJSON) other than Who's On First documents. There are some provisos:
+
+1. Currently only GeoJSON `Feature` records are supported. You can not index `FeatureCollections` yet. I mean you could write the code to index them but the code doesn't do it for you yet.
+2. Your GeoJSON `properties` dictionary has the following keys: `id`, `name` and `placetype`. The values can be anything (where "anything" means something that can be converted to an integer in the case of the `id` key).
+3. Your GeoJSON `feature` dictionary has a `bbox` key that is an array of coordinates, [per the GeoJSON spec](http://geojson.org/geojson-spec.html#bounding-boxes).
+4. Your GeoJSON file ends with `.geojson` (and not say `.json` or something else)
+
+_Note: The list above has been copied over from the `go-whosonfirst-pip` package which does the actual point-in-polygon heavy lifting. You should always consult the [list of the provisos document there](https://github.com/whosonfirst/go-whosonfirst-pip/blob/master/README.md#using-this-with-other-data-sources) for current restrictions on using non-WOF data sources.
+
+https://github.com/whosonfirst/go-whosonfirst-pip/blob/master/README.md#using-this-with-other-data-sources
+
 ## See also
 
 * https://github.com/whosonfirst/whosonfirst-data
