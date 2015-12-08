@@ -139,7 +139,7 @@ _Note: As of this writing the steps described above have not been integrated in 
 3. Your GeoJSON `feature` dictionary has a `bbox` key that is an array of coordinates, [per the GeoJSON spec](http://geojson.org/geojson-spec.html#bounding-boxes).
 4. Your GeoJSON file ends with `.geojson` (and not say `.json` or something else)
 
-_Note: The list above has been copied over from the `go-whosonfirst-pip` package which does the actual point-in-polygon heavy lifting. You should always consult the [list of the provisos document there](https://github.com/whosonfirst/go-whosonfirst-pip/blob/master/README.md#using-this-with-other-data-sources) for current restrictions on using non-WOF data sources.
+_Note: The list above has been copied over from the `go-whosonfirst-pip` package which does the actual point-in-polygon heavy lifting. You should always consult the [list of the provisos document there](https://github.com/whosonfirst/go-whosonfirst-pip/blob/master/README.md#using-this-with-other-data-sources) for current restrictions on using non-WOF data sources._
 
 https://github.com/whosonfirst/go-whosonfirst-pip/blob/master/README.md#using-this-with-other-data-sources
 
