@@ -21,6 +21,15 @@ if __name__ == '__main__':
     opt_parser.add_option('-s', '--source', dest='source', action='store', default='https://whosonfirst.mapzen.com/data/', help='Where to pre-fetch data from (default is the root WOF data server)')
     opt_parser.add_option('-v', '--verbose', dest='verbose', action='store_true', default=False, help='Be chatty (default is false)')
 
+    # things you probably don't need to worry about (but some do)
+
+    opt_parser.add_option('--pip-host', dest='pip_host', action='store', default='localhost', help='The host to run the WOF point-in-polygon server on (default is localhost)')
+    opt_parser.add_option('--pip-port', dest='pip_port', action='store', default='8080', help='The port to run the WOF point-in-polygon server on (default is 8080)')
+    opt_parser.add_option('--data-host', dest='data_host', action='store', default='localhost', help='The host to run the WOF data server on (default is localhost)')
+    opt_parser.add_option('--data-port', dest='data_port', action='store', default='9999', help='The port to run the WOF data server on (default is 9999)')
+    opt_parser.add_option('--www-host', dest='www_host', action='store', default='localhost', help='The host to run the WOF web server on (default is localhost)')
+    opt_parser.add_option('--www-port', dest='www_port', action='store', default='8001', help='The port to run the WOF web server on (default is localhost)')
+
     options, args = opt_parser.parse_args()
 
     if options.verbose:
@@ -91,12 +100,16 @@ if __name__ == '__main__':
 
     # Start the various background servers
 
-    pip_cmd = [pip_server, "-cors", "-port", "8080", "-data", options.data]
+    # pip_cmd = [pip_server, "-cors", "-host", options.pip_host, "-port", options.pip_port, "-data", options.data]
+
+    pip_cmd = [pip_server, "-cors", "-port", options.pip_port, "-data", options.data]
     pip_cmd.extend(args)
 
-    data_cmd = [file_server, "-cors", "-port", "9999", "-path", options.data]
+    # data_cmd = [file_server, "-cors", "-host", options.data_host, "-port", options.data_port, "-path", options.data]
+    # www_cmd = [file_server, "-host", options.www_host, "-port", options.www_port, "-path", www]
 
-    www_cmd = [file_server, "-port", "8001", "-path", www]
+    data_cmd = [file_server, "-cors", "-port", options.data_port, "-path", options.data]
+    www_cmd = [file_server, "-port", options.www_port, "-path", www]
 
     logging.debug(" ".join(pip_cmd))
     logging.debug(" ".join(data_cmd))
