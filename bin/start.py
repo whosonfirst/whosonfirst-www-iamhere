@@ -100,16 +100,11 @@ if __name__ == '__main__':
 
     # Start the various background servers
 
-    # pip_cmd = [pip_server, "-cors", "-host", options.pip_host, "-port", options.pip_port, "-data", options.data]
-
-    pip_cmd = [pip_server, "-cors", "-port", options.pip_port, "-data", options.data]
+    pip_cmd = [pip_server, "-cors", "-host", options.pip_host, "-port", options.pip_port, "-data", options.data]
     pip_cmd.extend(args)
 
-    # data_cmd = [file_server, "-cors", "-host", options.data_host, "-port", options.data_port, "-path", options.data]
-    # www_cmd = [file_server, "-host", options.www_host, "-port", options.www_port, "-path", www]
-
-    data_cmd = [file_server, "-cors", "-port", options.data_port, "-path", options.data]
-    www_cmd = [file_server, "-port", options.www_port, "-path", www]
+    data_cmd = [file_server, "-cors", "-host", options.data_host, "-port", options.data_port, "-path", options.data]
+    www_cmd = [file_server, "-host", options.www_host, "-port", options.www_port, "-path", www]
 
     logging.debug(" ".join(pip_cmd))
     logging.debug(" ".join(data_cmd))
