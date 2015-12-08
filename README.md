@@ -26,9 +26,9 @@ See the way you are passing one or more "meta" files? Those are just CSV files i
 
 After you run `start.py` you should start to see a lot of logging sent to your terminal as the point-in-polygon server indexes your Who's On First data. Depending on how many meta files you've chosen to index and how many records they contain (and what kind of computer you're using) this process can take between 30 seconds to three or four minutes to complete.
 
-A few words about the data: There is a lot of it. The entirety of the Who's On First dataset is quite large and maybe you don't need or want to download all of it just to get started with `whosonfirst-www-iamhere`.
+_A few words about the data: There is a lot of it. The entirety of the Who's On First dataset is quite large and maybe you don't need or want to download all of it just to get started with `whosonfirst-www-iamhere`._
 
-The `start.py` script allows you to download and store only those records listed in a "meta" file before it starts all the other processes. You do this by passing the `-f` flag, like this:
+The `start.py` script allows you to download and store only those records listed in a "meta" file before it starts all the other processes. You do this by passing the `-f` flag, for example:
 
 ```
 $> curl -o wof-region-latest.csv https://raw.githubusercontent.com/whosonfirst/whosonfirst-data/master/meta/wof-region-latest.csv
