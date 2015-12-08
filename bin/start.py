@@ -17,6 +17,8 @@ if __name__ == '__main__':
     opt_parser = optparse.OptionParser()
 
     opt_parser.add_option('-d', '--data', dest='data', action='store', default=None, help='The path to your Who\'s On First data')
+    opt_parser.add_option('-f', '--fetch', dest='fetch', action='store_true', default=None, help='Fetch and store data store in the meta files you want to index')
+    opt_parser.add_option('-s', '--source', dest='source', action='store', default='https://whosonfirst.mapzen.com/data/', help='Where to pre-fetch data from (default is the root WOF data server)')
     opt_parser.add_option('-v', '--verbose', dest='verbose', action='store_true', default=False, help='Be chatty (default is false)')
 
     options, args = opt_parser.parse_args()
@@ -26,6 +28,14 @@ if __name__ == '__main__':
     else:
         logging.basicConfig(level=logging.INFO)
 
+    # Make sure we have something to do
+
+    if len(args) == 0:
+        logging.error("you forgot to specify any meta files to load")
+        sys.exit()
+
+    # Paths
+
     whatami = sys.platform
 
     whoami = os.path.abspath(sys.argv[0])
@@ -34,6 +44,8 @@ if __name__ == '__main__':
 
     bin = os.path.join(root, "bin")
     www = os.path.join(root, "www")
+
+    # Ensure config file
 
     js = os.path.join(www, "javascript")
     cfg = os.path.join(js, "mapzen.whosonfirst.config.js")
@@ -48,6 +60,8 @@ if __name__ == '__main__':
             logging.error("failed to copy %s to %s!" % (example, cfg))
             sys.exit()
 
+    # Figure out where binaries live
+
     if whatami == 'darwin':
         bin = os.path.join(bin, "osx")
     elif whatami == 'windows':
@@ -58,12 +72,24 @@ if __name__ == '__main__':
         logging.error("unknown or unsupported platform: %s" % whatami)
         sys.exit()
 
-    if len(args) == 0:
-        logging.error("you forgot to specify any meta files to load")
-        sys.exit()
-
     pip_server = os.path.join(bin, "wof-pip-server")
     file_server = os.path.join(bin, "wof-fileserver")
+    clone_tool = os.path.join(bin, "wof-clone-metafiles")
+
+    # Do I need to pre-fetch any data?
+
+    if options.fetch:
+
+        logging.info("pre-fetching %s" % " ".join(args))
+
+        dest = os.path.abspath(options.data)
+
+        cmd = [clone_tool, "-dest", dest, "-source", options.source]
+        cmd.extend(args)
+
+        subprocess.check_call(cmd)
+
+    # Start the various background servers
 
     pip_cmd = [pip_server, "-cors", "-port", "8080", "-data", options.data]
     pip_cmd.extend(args)
@@ -76,11 +102,11 @@ if __name__ == '__main__':
     logging.debug(" ".join(data_cmd))
     logging.debug(" ".join(www_cmd))
 
-    # sys.exit()
-
     pip = subprocess.Popen(pip_cmd)
     data = subprocess.Popen(data_cmd)
     www = subprocess.Popen(www_cmd)
+
+    # Watch for ctrl-C
 
     def signal_handler(signal, frame):
 
@@ -91,6 +117,8 @@ if __name__ == '__main__':
         raise Exception, "all done"
 
     signal.signal(signal.SIGINT, signal_handler)
+
+    # Spin spin sping...
 
     try:
         while True:
