@@ -14,21 +14,32 @@ Using `start.py` will require a few things that are outside the scope of this do
 
 1. That you know what the command line is and are comfortable using it.
 2. That you have a copy of Python installed on your computer. If you are using Linux or a Mac it comes pre-installed.
-3. That you have "checked out" a copy of the [whosonfirst-data](https://github.com/whosonfirst/whosonfirst-data) to your computer.
-
-_Or: If you don't want to download the entire WOF dataset take a look at the [Data sources section of this README](#data-sources) for instructions on how to get started with just a slice of the WOF data._
+3. That you have some or all of the [whosonfirst-data](https://github.com/whosonfirst/whosonfirst-data) on your computer. _This is discussed further below._
 
 Assuming those things all you should need to do to get started is type the following from the command line:
 
 ```
-./bin/start.py -d /path/to/your/whosonfirst-data/data /path/to/your/whosonfirst-data/meta/wof-neighbourhood-latest.csv /path/to/your/whosonfirst-data/meta/wof-locality-latest.csv
+$> ./bin/start.py -d /path/to/your/whosonfirst-data/data /path/to/your/whosonfirst-data/meta/wof-neighbourhood-latest.csv /path/to/your/whosonfirst-data/meta/wof-locality-latest.csv
 ```
 
 See the way you are passing one or more "meta" files? Those are just CSV files included in the `whosonfirst-data` repository with pointers to Who's On First records of a particular placetype. You can pass as many "meta" files as you want. Each record in each each meta file will be indexed and be query-able by `whosonfirst-www-iamhere`.
 
 After you run `start.py` you should start to see a lot of logging sent to your terminal as the point-in-polygon server indexes your Who's On First data. Depending on how many meta files you've chosen to index and how many records they contain (and what kind of computer you're using) this process can take between 30 seconds to three or four minutes to complete.
 
-Once it's finished point your web browser to `http://localhost:8001/` and start looking around!
+A few words about the data: There is a lot of it. The entirety of the Who's On First dataset is quite large and maybe you don't need or want to download all of it just to get started with `whosonfirst-www-iamhere`.
+
+The `start.py` script allows you to download and store only those records listed in a "meta" file before it starts all the other processes. You do this by passing the `-f` flag, like this:
+
+```
+$> curl -o wof-region-latest.csv https://raw.githubusercontent.com/whosonfirst/whosonfirst-data/master/meta/wof-region-latest.csv
+$> ./bin/start.py -f -d /path/where/to/store/whosonfirst-data/ wof-region-latest.csv
+```
+
+In the example above the first thing you do is download the `wof-region-latest.csv` meta file from the [whosonfirst-data](https://github.com/whosonfirst/whosonfirst-data) repository. The `start.py` script does not support fetching remote meta files as of this writing. The next step is to run the `start.py` like usual but specifying the `-f` flag. You can specify as many meta files as you want.
+
+The `-f` flag with instruct the `start.py` application to spawn a separate application that downloads the data (listed in the meta file) using 24 concurrent processes but depending on how many records it needs to fetch it may take a few minutes to complete. After it's cloned all the data to your computer then the `start.py` application will move along to the next step which is to index all the data.
+
+Once all these steps have completed point your web browser to `http://localhost:8001/` and start looking around!
 
 ### "simple" mode - the basics
 
