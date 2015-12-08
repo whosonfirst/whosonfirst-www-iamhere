@@ -109,38 +109,6 @@ This can be anything you want it to be. (It doesn't even have to set `CORS` head
 $> ./bin/osx/wof-fileserver -port 8001 -path /usr/local/mapzen/whosonfirst-www-iamhere/www/
 ```
 
-## Data sources
-
-The [whosonfirst-data](https://github.com/whosonfirst/whosonfirst-data) dataset is large and not everyone may need or want to download all of it just to use `whosonfirst-www-iamhere`.
-
-We've included a pre-compiled binary verion of the `wof-clone-metafiles` program – again, available for OS X, Windows and Linux – that allows you to import a subset of Who's On First data defined in one or more "meta" files. Meta files are just CSV files which contain paths to specific Who's On First records.
-
-_The Who's On First project produces meta files for each of the placetypes in the [WOF hierarchy](https://github.com/whosonfirst/whosonfirst-placetypes) but you could create a meta file for any arbitrary grouping of records._
-
-### Using wof-clone-metafiles
-
-In this example we will download the meta file for regions from the [whosonfirst-data](https://github.com/whosonfirst/whosonfirst-data) repository and use that as the input to the `wof-clone-metafiles` program. Like this:
-
-```
-$> wget https://raw.githubusercontent.com/whosonfirst/whosonfirst-data/master/meta/wof-region-latest.csv
-$> ./bin/osx/wof-clone-metafiles -dest tmp wof-region-latest.csv
-```
-
-This will do two things:
-
-1. Download a copy of the `wof-region-latest.csv` meta file and store in the current working directory
-2. Tell the `wof-clone-metafiles` program to read that meta file and fetch all the records listed, saving them to a `tmp` folder (in the current working directory)
-
-Then you would run the `start.py` program (described above) specifying the `tmp` folder and `wof-region-latest.csv` as arguments. Like this:
-
-```
-./bin/start.py -d tmp wof-region-latest.csv
-```
-
-Finally point your web browser at `http://localhost:8001` and start poking around the regions!
-
-_Note: As of this writing the steps described above have not been integrated in the `start.py` script. They should be and they will be... but that work [hasn't happened yet](https://github.com/whosonfirst/whosonfirst-www-iamhere/issues/7)._
-
 ## Non-WOF data sources
 
 `whosonfirst-www-iamhere` is designed to work with data sources (collections of GeoJSON) other than Who's On First documents. There are some provisos:
