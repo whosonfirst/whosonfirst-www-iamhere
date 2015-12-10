@@ -9,6 +9,8 @@ mapzen.whosonfirst.config = (function(){
 
 			mapzen.whosonfirst.data.endpoint("http://localhost:9999/");
 			mapzen.whosonfirst.pip.endpoint("http://localhost:8080/");
+
+			// mapzen.whosonfirst.iamhere.scenefile("");
 			
 			// mapzen.whosonfirst.pelias.endpoint("");
 			// mapzen.whosonfirst.pelias.apikey("");
