@@ -120,7 +120,7 @@ mapzen.whosonfirst.feedback = (function(){
 			
 			'remove': function(id){
 
-				var item = document.getElementById(ts);
+				var item = document.getElementById(id);
 
 				if (item){
 					var list = self._list();
