@@ -19,6 +19,8 @@ mapzen.whosonfirst.iamhere = (function(){
 
 				// 1. Just finish this:
 				// https://github.com/whosonfirst/p5-Whosonfirst-MaxMind-Writer
+				// See also:
+				// https://github.com/whosonfirst/whosonfirst-www-iamhere/issues/1
 
 				// 2. In the interim just run this:
 				// https://github.com/oschwald/maxminddb-golang
