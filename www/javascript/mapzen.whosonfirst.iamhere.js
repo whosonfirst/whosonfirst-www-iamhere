@@ -15,10 +15,21 @@ mapzen.whosonfirst.iamhere = (function(){
 				var s = mapzen.whosonfirst.iamhere.scenefile()
 				mapzen.whosonfirst.leaflet.tangram.scenefile(s);
 
-				// TO DO - try to be smart(er) about where to load the default map
-				// besides just the SF Bay Area...
+				// TO DO (20151214/thisisaaronland)
 
-				map = mapzen.whosonfirst.leaflet.tangram.map_with_bbox('map', 37.63983, -123.173825, 37.929824, -122.28178);
+				// 1. Just finish this:
+				// https://github.com/whosonfirst/p5-Whosonfirst-MaxMind-Writer
+
+				// 2. In the interim just run this:
+				// https://github.com/oschwald/maxminddb-golang
+				// and do the concordance dance
+
+				var swlat = 37.70120736474139;
+				var swlon = -122.68707275390624;
+				var nelat = 37.80924146650164;
+				var nelon = -122.21912384033203;
+
+				map = mapzen.whosonfirst.leaflet.tangram.map_with_bbox('map', swlat, swlon, nelat, nelon);
 				
 				L.hash(map);
 
@@ -369,6 +380,7 @@ mapzen.whosonfirst.iamhere = (function(){
 
 			'update_location': function(){
 
+				console.log(map.getBounds());
 				var ll = map.getCenter();
 				var lat = ll.lat;
 				var lon = ll.lng;
