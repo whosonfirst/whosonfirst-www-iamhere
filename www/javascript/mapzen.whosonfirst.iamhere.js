@@ -382,7 +382,6 @@ mapzen.whosonfirst.iamhere = (function(){
 
 			'update_location': function(){
 
-				console.log(map.getBounds());
 				var ll = map.getCenter();
 				var lat = ll.lat;
 				var lon = ll.lng;
