@@ -93,7 +93,7 @@ if __name__ == '__main__':
 
         dest = os.path.abspath(options.data)
 
-        cmd = [clone_tool, "-dest", dest, "-source", options.source, "-procs", 24]
+        cmd = [clone_tool, "-dest", dest, "-source", options.source, "-procs", "24"]
         cmd.extend(args)
 
         subprocess.check_call(cmd)
