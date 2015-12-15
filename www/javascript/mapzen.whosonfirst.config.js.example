@@ -10,11 +10,14 @@ mapzen.whosonfirst.config = (function(){
 			mapzen.whosonfirst.data.endpoint("http://localhost:9999/");
 			mapzen.whosonfirst.pip.endpoint("http://localhost:8080/");
 
+			// https://mapzen.com/projects/tangram/
 			// mapzen.whosonfirst.iamhere.scenefile("");
 			
+			// https://mapzen.com/projects/pelias/
 			// mapzen.whosonfirst.pelias.endpoint("");
 			// mapzen.whosonfirst.pelias.apikey("");
 
+			// general debugging
 			// mapzen.whosonfirst.log.show();
 		}
 	};
