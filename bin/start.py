@@ -31,7 +31,8 @@ if __name__ == '__main__':
     opt_parser.add_option('--www-port', dest='www_port', action='store', default='8001', help='The port to run the WOF web server on (default is localhost)')
     opt_parser.add_option('--iplookup-host', dest='iplookup_host', action='store', default='localhost', help='The host to run the WOF IP lookup server on (default is localhost)')
     opt_parser.add_option('--iplookup-port', dest='iplookup_port', action='store', default='8668', help='The port to run the WOF IP lookup server on (default is localhost)')
-    opt_parser.add_option('--iplookup-data', dest='iplookup_data', action='store', default=None, help='The data source used by the WOF IP lookup server on (default is None which means it will look for a known datafile included with this repository)')
+    opt_parser.add_option('--iplookup-mmdb', dest='iplookup_mmdb', action='store', default=None, help='The mmdb database used by the WOF IP lookup server on (default is None which means it will look for a known mmdb database included with this repository)')
+    opt_parser.add_option('--iplookup-concordances', dest='iplookup_concordances', action='store', default=None, help='The WOF concordances meta file used by the WOF IP lookup server on (default is None which means it will look for a known meta file included with this repository)')
 
     options, args = opt_parser.parse_args()
 
@@ -110,6 +111,17 @@ if __name__ == '__main__':
 
     data_cmd = [file_server, "-cors", "-host", options.data_host, "-port", options.data_port, "-path", options.data]
     www_cmd = [file_server, "-host", options.www_host, "-port", options.www_port, "-path", www]
+
+    lookup_data = os.path.join(data, "iplookup")
+
+    mmdb = options.iplookup_mmdb
+    concordances = options.iplookup_mmdb
+
+    if mmdb == None:
+        mmdb = os.path.join(lookup_data, "GeoLite2-City.mmdb")
+
+    if concordances == None:
+        concordances = os.path.join(lookup_data, "wof-concordances-gnid.csv")
 
     lookup_cmd = [lookup_tool, "-cors", "-host", options.iplookup_host, "-port", options.iplookup_port , "-mmdb", mmdb, "-concordances", concordances]
 
