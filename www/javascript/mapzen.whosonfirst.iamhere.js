@@ -26,6 +26,7 @@ mapzen.whosonfirst.iamhere = (function(){
 				// https://github.com/oschwald/maxminddb-golang
 				// and do the concordance dance
 
+				
 				var swlat = 37.70120736474139;
 				var swlon = -122.68707275390624;
 				var nelat = 37.80924146650164;
@@ -80,6 +81,11 @@ mapzen.whosonfirst.iamhere = (function(){
 					mapzen.whosonfirst.feedback.warning("Reverse geocoding is disabled because no API endpoint has been defined");
 				}
 				
+				if (mapzen.whosonfirst.iplookup.endpoint()){
+					var ip = undefined;	// this is mostly here for setting by hand while debugging...
+					mapzen.whosonfirst.iamhere.goto_ip(ip);
+				}
+
 				window.onresize = self.draw_crosshairs;
 
 				window.ononline = self.on_online;
@@ -97,6 +103,43 @@ mapzen.whosonfirst.iamhere = (function(){
 				self.update_location();
 				self.reverse_geocode();
 				
+			},
+
+			'goto_ip': function(ip){
+
+				var on_lookup = function(rsp){
+
+					wofid = rsp['wofid'];
+					var url = mapzen.whosonfirst.data.id2abspath(wofid);
+
+					mapzen.whosonfirst.net.fetch(url, on_fetch, on_notfetch);
+				};
+
+				var on_notlookup = function(rsp){
+					mapzen.whosonfirst.log.error("failed to lookup IP address");
+				};
+
+				var on_fetch = function(feature){
+
+					/* This works but we need to be smarter about what kind of place
+					   type we're returning and how things are zoomed out etc
+					   (20160105/thisisaaronland)
+					*/
+
+					var bbox = mapzen.whosonfirst.geojson.derive_bbox(feature);
+
+					var sw = [ bbox[1], bbox[0] ]
+					var ne = [ bbox[3], bbox[2] ]
+
+					map.fitBounds([sw, ne ]);
+
+				};
+
+				var on_notfetch = function(rsp){
+					mapzen.whosonfirst.log.error("failed to fetch record for IP address");					
+				};
+
+				mapzen.whosonfirst.iplookup.lookup(ip, on_lookup, on_notlookup);
 			},
 
 			'on_online': function(){
