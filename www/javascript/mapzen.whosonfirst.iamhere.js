@@ -83,7 +83,14 @@ mapzen.whosonfirst.iamhere = (function(){
 				
 				if (mapzen.whosonfirst.iplookup.endpoint()){
 					var ip = undefined;	// this is mostly here for setting by hand while debugging...
-					mapzen.whosonfirst.iamhere.goto_ip(ip);
+
+					if ((! ip) && (self.is_localhost(location.host))){
+						mapzen.whosonfirst.log.error("IP lookups disabled because this is localhost");
+					}
+
+					else {
+						mapzen.whosonfirst.iamhere.iplookup(ip);
+					}
 				}
 
 				window.onresize = self.draw_crosshairs;
@@ -103,43 +110,6 @@ mapzen.whosonfirst.iamhere = (function(){
 				self.update_location();
 				self.reverse_geocode();
 				
-			},
-
-			'goto_ip': function(ip){
-
-				var on_lookup = function(rsp){
-
-					wofid = rsp['wofid'];
-					var url = mapzen.whosonfirst.data.id2abspath(wofid);
-
-					mapzen.whosonfirst.net.fetch(url, on_fetch, on_notfetch);
-				};
-
-				var on_notlookup = function(rsp){
-					mapzen.whosonfirst.log.error("failed to lookup IP address");
-				};
-
-				var on_fetch = function(feature){
-
-					/* This works but we need to be smarter about what kind of place
-					   type we're returning and how things are zoomed out etc
-					   (20160105/thisisaaronland)
-					*/
-
-					var bbox = mapzen.whosonfirst.geojson.derive_bbox(feature);
-
-					var sw = [ bbox[1], bbox[0] ]
-					var ne = [ bbox[3], bbox[2] ]
-
-					map.fitBounds([sw, ne ]);
-
-				};
-
-				var on_notfetch = function(rsp){
-					mapzen.whosonfirst.log.error("failed to fetch record for IP address");					
-				};
-
-				mapzen.whosonfirst.iplookup.lookup(ip, on_lookup, on_notlookup);
 			},
 
 			'on_online': function(){
@@ -183,8 +153,14 @@ mapzen.whosonfirst.iamhere = (function(){
 			'is_localhost': function(url){
 
 				// please not like this...
+				// basically everything about this is wrong...
+				// please fix me... please... ?
 
 				var parts = url.split(":");
+
+				if (parts[0] == "localhost"){
+					return true;
+				}
 
 				if (parts[1] == "//localhost"){
 					return true;
@@ -212,7 +188,7 @@ mapzen.whosonfirst.iamhere = (function(){
 
 					var lat = pos.coords.latitude;
 					var lon = pos.coords.longitude;
-					self.jump_to(lat, lon, 16);					
+					self.jump_to_point(lat, lon, 16);					
 				};
 
 				var on_error = function(rsp){
@@ -222,6 +198,45 @@ mapzen.whosonfirst.iamhere = (function(){
 
 				navigator.geolocation.getCurrentPosition(on_locate, on_error);
 
+			},
+
+			'iplookup': function(ip){
+
+				var on_lookup = function(rsp){
+
+					mapzen.whosonfirst.log.info("IP lookup for " + rsp['id'] + " is: " + rsp['wofid']);
+					
+					wofid = rsp['wofid'];
+					var url = mapzen.whosonfirst.data.id2abspath(wofid);
+
+					mapzen.whosonfirst.net.fetch(url, on_fetch, on_notfetch);
+				};
+
+				var on_notlookup = function(rsp){
+					mapzen.whosonfirst.log.error("failed to lookup IP address");
+				};
+
+				var on_fetch = function(feature){
+
+					/* This works but we need to be smarter about what kind of place
+					   type we're returning and how things are zoomed out etc
+					   (20160105/thisisaaronland)
+					*/
+
+					var bbox = mapzen.whosonfirst.geojson.derive_bbox(feature);
+
+					var sw = [ bbox[1], bbox[0] ]
+					var ne = [ bbox[3], bbox[2] ]
+
+					self.jump_to_bbox(sw, ne);
+
+				};
+
+				var on_notfetch = function(rsp){
+					mapzen.whosonfirst.log.error("failed to fetch record for IP address");					
+				};
+
+				mapzen.whosonfirst.iplookup.lookup(ip, on_lookup, on_notlookup);
 			},
 			
 			'search': function(){
@@ -276,7 +291,7 @@ mapzen.whosonfirst.iamhere = (function(){
 				var lat = coords[1];
 				var lon = coords[0];
 				
-				self.jump_to(lat, lon, 12);
+				self.jump_to_point(lat, lon, 12);
 				
 				/*
 				  var bbox = rsp['bbox'];
@@ -417,12 +432,19 @@ mapzen.whosonfirst.iamhere = (function(){
 				li.innerHTML = where;
 			},
 
-			'jump_to': function(lat, lon, zoom){
+			'jump_to_point': function(lat, lon, zoom){
 				map.setView([lat, lon], zoom);
 				self.update_location();
 				self.reverse_geocode();
 			},
 
+			'jump_to_bbox': function(sw, ne){
+				map.fitBounds([sw, ne ]);
+
+				self.update_location();
+				self.reverse_geocode();
+			},
+			
 			'update_location': function(){
 
 				var ll = map.getCenter();
