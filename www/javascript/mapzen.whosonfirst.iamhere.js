@@ -226,8 +226,8 @@ mapzen.whosonfirst.iamhere = (function(){
 
 					var bbox = mapzen.whosonfirst.geojson.derive_bbox(feature);
 
-					var sw = [ bbox[1], bbox[0] ]
-					var ne = [ bbox[3], bbox[2] ]
+					var sw = [ bbox[1], bbox[0] ];
+					var ne = [ bbox[3], bbox[2] ];
 
 					self.jump_to_bbox(sw, ne);
 
