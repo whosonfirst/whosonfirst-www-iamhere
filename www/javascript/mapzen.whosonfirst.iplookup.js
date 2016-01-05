@@ -20,7 +20,7 @@ mapzen.whosonfirst.iplookup = (function(){
 
 				var req = mapzen.whosonfirst.iplookup.endpoint() + "?" + query;
 
-				mapzen.whosonfirst.log.info("lookup IP " + q)
+				mapzen.whosonfirst.log.info("lookup IP " + ip)
 
 				mapzen.whosonfirst.net.fetch(req, on_success, on_error);
 			},

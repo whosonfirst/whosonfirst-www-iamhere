@@ -204,7 +204,8 @@ mapzen.whosonfirst.iamhere = (function(){
 
 				var on_lookup = function(rsp){
 
-					mapzen.whosonfirst.log.info("IP lookup for " + rsp['id'] + " is: " + rsp['wofid']);
+					console.log(rsp);
+					mapzen.whosonfirst.log.info("IP lookup for " + rsp['ip'] + " is: " + rsp['wofid']);
 					
 					wofid = rsp['wofid'];
 					var url = mapzen.whosonfirst.data.id2abspath(wofid);
