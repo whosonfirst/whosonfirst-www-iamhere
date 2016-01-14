@@ -122,6 +122,10 @@ _Note: The list above has been copied over from the `go-whosonfirst-pip` package
 
 https://github.com/whosonfirst/go-whosonfirst-pip/blob/master/README.md#using-this-with-other-data-sources
 
+## Shout-outs and general house-keeping
+
+The GeoLite2 databases are distributed under the Creative Commons Attribution-ShareAlike 3.0 Unported License and are [available from MaxMind](https://dev.maxmind.com/geoip/geoip2/geolite2/).
+
 ## See also
 
 * https://github.com/whosonfirst/whosonfirst-data
