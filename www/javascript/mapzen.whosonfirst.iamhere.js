@@ -83,6 +83,7 @@ mapzen.whosonfirst.iamhere = (function(){
 				
 				if (mapzen.whosonfirst.iplookup.endpoint()){
 					var ip = undefined;	// this is mostly here for setting by hand while debugging...
+					// var ip = '142.213.160.134';
 
 					if ((! ip) && (self.is_localhost(location.host))){
 						mapzen.whosonfirst.log.error("IP lookups disabled because this is localhost");
