@@ -7,13 +7,17 @@ mapzen.whosonfirst.pip = (function(){
 
 		var self = {
 
-			'get_by_latlon': function(lat, lon, on_success, on_error){
+			'get_by_latlon': function(lat, lon, placetype, on_success, on_error){
 
 				var q = { 'latitude': lat, 'longitude': lon };
+
+				if (placetype){
+					q['placetype'] = placetype;
+				}
+
 				q = mapzen.whosonfirst.net.encode_query(q);
 
 				mapzen.whosonfirst.log.info("pip " + q);
-
 				var req = self.endpoint() + "?" + q;
 				
 				mapzen.whosonfirst.net.fetch(req, on_success, on_error);

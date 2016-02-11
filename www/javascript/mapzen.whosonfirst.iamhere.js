@@ -7,6 +7,7 @@ mapzen.whosonfirst.iamhere = (function(){
 
 		var map;
 		var current_layers = {};
+		var _placetypes = [];
 
 		var self = {
 			
@@ -335,7 +336,19 @@ mapzen.whosonfirst.iamhere = (function(){
 					el.innerHTML = "the land of INVISIBLE ERROR CAT because the reverse geocoding failed";
 				};
 
-				mapzen.whosonfirst.pip.get_by_latlon(lat, lon, on_success, on_fail);
+				var placetypes = self.placetypes();
+				var count = placetypes.length;
+				
+				if (count == 0){
+					mapzen.whosonfirst.pip.get_by_latlon(lat, lon, null, on_success, on_fail);
+				}
+
+				else {
+					for (var i=0; i < count; i++){
+						var pt = placetypes[i];
+						mapzen.whosonfirst.pip.get_by_latlon(lat, lon, pt, on_success, on_fail);
+					}
+				}
 
 				var el = document.getElementById("whereami-reversegeo");
 				el.style = "display:none !important;";
@@ -512,7 +525,15 @@ mapzen.whosonfirst.iamhere = (function(){
 
 				return _scenefile;
 			},
-			
+		
+			'placetypes': function(pt){
+
+				if ((pt) && (Array.isArray(pt))){
+					_placetypes = pt;
+				}
+
+				return _placetypes;
+			}
 		};
 		
 		return self;
