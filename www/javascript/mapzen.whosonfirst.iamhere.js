@@ -354,10 +354,19 @@ mapzen.whosonfirst.iamhere = (function(){
 
 				var placetypes = self.placetypes();
 				var count = placetypes.length;
-				
+
+				// see also:
+				// https://github.com/whosonfirst/go-whosonfirst-pip/issues/22
+
 				if (count == 0){
 					mapzen.whosonfirst.pip.get_by_latlon(lat, lon, null, on_success, on_fail);
 				}
+
+				// this is a BAD BAD DUMB way to do it and fraught with weirdness.
+				// see notes in mapzen.whosonfirst.config.js.example for details.
+				// we're leaving this here for now in case someone needs to throw
+				// caution to the wind...
+				// (20160217/thisisaaronland)
 
 				else {
 					for (var i=0; i < count; i++){
