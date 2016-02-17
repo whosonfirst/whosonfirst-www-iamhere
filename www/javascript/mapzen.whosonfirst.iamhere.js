@@ -110,7 +110,22 @@ mapzen.whosonfirst.iamhere = (function(){
 
 				self.draw_crosshairs();
 				self.update_location();
-				self.reverse_geocode();
+
+				// sudo put me in a function or helper library?
+				// (20160216/thisisaaronland)
+
+				var hash = location.hash;
+				var match = hash.match(/^\#\d+\/(-?\d+(?:\.\d+))?\/(-?\d+(?:\.\d+))?/)
+
+				var lat = null;
+				var lon = null;
+
+				if (match){
+					lat = match[1];
+					lon = match[2];
+				}
+
+				self.reverse_geocode(lat, lon);
 				
 			},
 
@@ -206,7 +221,6 @@ mapzen.whosonfirst.iamhere = (function(){
 
 				var on_lookup = function(rsp){
 
-					console.log(rsp);
 					mapzen.whosonfirst.log.info("IP lookup for " + rsp['ip'] + " is: " + rsp['wofid']);
 					
 					wofid = rsp['wofid'];
@@ -322,10 +336,12 @@ mapzen.whosonfirst.iamhere = (function(){
 					return false;
 				}
 
-				var ll = map.getCenter();
-				var lat = ll.lat;
-				var lon = ll.lng;
-				
+				if ((! lat) || (! lon)){
+					var ll = map.getCenter();
+					lat = ll.lat;
+					lon = ll.lng;
+				}
+
 				var on_success = function(rsp){
 					self.on_reverse_geocode(rsp);
 				};
