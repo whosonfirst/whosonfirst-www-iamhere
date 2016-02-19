@@ -539,7 +539,7 @@ mapzen.whosonfirst.iamhere = (function(){
 				
 				style = style.join(";");
 				var crosshair = document.getElementById("crosshairs");
-				crosshair.style = style;
+				crosshair.style.cssText = style;
 			},
 
 			'scenefile': function(s){
