@@ -60,7 +60,7 @@ mapzen.whosonfirst.iamhere = (function(){
 						find.onclick = self.search;
 
 						var search = document.getElementById("search");
-						search.style = "display:inline;";
+						search.style.cssText = "display:inline;";
 					}
 
 					else {
@@ -74,7 +74,7 @@ mapzen.whosonfirst.iamhere = (function(){
 
 				if (mapzen.whosonfirst.pip.endpoint()){
 					var findme = document.getElementById("findme");
-					findme.style = "display:inline !important;";
+					findme.style.cssText = "display:inline !important;";
 					findme.onclick = self.geolocate;
 				}
 
@@ -142,7 +142,7 @@ mapzen.whosonfirst.iamhere = (function(){
 				f.removeAttribute("disabled");
 
 				var fm = document.getElementById("findme");
-				fm.style = "display:inline;color:#2E78A8"
+				fm.style.cssText = "display:inline;color:#2E78A8"
 			},
 
 			'on_offline': function(){
@@ -159,12 +159,12 @@ mapzen.whosonfirst.iamhere = (function(){
 					q.value = "";
 
 					var f = document.getElementById("find");
-					f.style = "display:none;"
+					f.style.cssText = "display:none;"
 					f.setAttribute("disabled", "disabled");
 				}
 
 				var fm = document.getElementById("findme");
-				fm.style = "display:inline;color:#bbb"
+				fm.style.cssText = "display:inline;color:#bbb"
 			},
 			
 			'is_localhost': function(url){
@@ -348,7 +348,7 @@ mapzen.whosonfirst.iamhere = (function(){
 
 				var on_fail = function(rsp){
 					var el = document.getElementById("whereami-reversegeo");
-					el.style = "display:inline !important;";
+					el.style.cssText = "display:inline !important;";
 					el.innerHTML = "the land of INVISIBLE ERROR CAT because the reverse geocoding failed";
 				};
 
@@ -376,7 +376,7 @@ mapzen.whosonfirst.iamhere = (function(){
 				}
 
 				var el = document.getElementById("whereami-reversegeo");
-				el.style = "display:none !important;";
+				el.style.cssText = "display:none !important;";
 				el.innerHTML = "";
 			},
 
@@ -414,7 +414,7 @@ mapzen.whosonfirst.iamhere = (function(){
 				}
 				
 				var li = document.getElementById("whereami-reversegeo");
-				li.style = "display:inline !important;";
+				li.style.cssText = "display:inline !important;";
 
 				if (! count_possible){
 					li.innerHTML = "a place we don't know about";
