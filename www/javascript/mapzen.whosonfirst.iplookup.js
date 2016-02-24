@@ -10,7 +10,9 @@ mapzen.whosonfirst.iplookup = (function(){
 
 			'lookup': function(ip, on_success, on_error){
 
-				var query = {};
+				var query = {
+					'raw': 1,
+				};
 
 				if (ip){
 					query['ip'] = ip;

@@ -83,16 +83,8 @@ mapzen.whosonfirst.iamhere = (function(){
 				}
 				
 				if (mapzen.whosonfirst.iplookup.endpoint()){
-					var ip = undefined;	// this is mostly here for setting by hand while debugging...
-					// var ip = '142.213.160.134';
-
-					if ((! ip) && (self.is_localhost(location.host))){
-						mapzen.whosonfirst.log.error("IP lookups disabled because this is localhost");
-					}
-
-					else {
-						mapzen.whosonfirst.iamhere.iplookup(ip);
-					}
+				       
+					mapzen.whosonfirst.iamhere.iplookup();
 				}
 
 				window.onresize = self.draw_crosshairs;
@@ -221,9 +213,10 @@ mapzen.whosonfirst.iamhere = (function(){
 
 				var on_lookup = function(rsp){
 
+					// console.log(rsp);
 					mapzen.whosonfirst.log.info("IP lookup for " + rsp['ip'] + " is: " + rsp['wofid']);
-					
-					wofid = rsp['wofid'];
+
+					wofid = rsp['whosonfirst_id'];
 					var url = mapzen.whosonfirst.data.id2abspath(wofid);
 
 					mapzen.whosonfirst.net.fetch(url, on_fetch, on_notfetch);
