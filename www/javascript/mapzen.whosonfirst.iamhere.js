@@ -106,6 +106,8 @@ mapzen.whosonfirst.iamhere = (function(){
 					
 					var do_enable = function(){
 
+						mapzen.whosonfirst.log.info("enabling IP lookups");
+						
 						self.set_cookie( disable_cookie, 0);
 						enabled.style = "display:block";
 						disabled.style = "display:none";						
@@ -113,6 +115,8 @@ mapzen.whosonfirst.iamhere = (function(){
 
 					var do_disable = function(){
 
+						mapzen.whosonfirst.log.info("disbling IP lookups");
+						
 						self.set_cookie( disable_cookie, 1);
 						enabled.style = "display:none";
 						disabled.style = "display:block";						
