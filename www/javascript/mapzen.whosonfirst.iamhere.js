@@ -362,7 +362,7 @@ mapzen.whosonfirst.iamhere = (function(){
 				var intro = document.createElement("div");
 
 				var p1_sentences = [
-					"Using your computer's IP address we've asked the computer-robots where in the world they think you might be right now.",
+					"Using your computer's IP address we've asked the computer-robots in the sky where in the world they think you might be right now.",
 					"We've used this information to auto-position the map around there.",
 					"Sometimes the mappings from IP address to location are weird. Sometimes they are just wrong.",
 					"Sometimes computers being \"helpful\" like this is weird and creepy so we've added a setting to allow you to disable this feature in the future.",
