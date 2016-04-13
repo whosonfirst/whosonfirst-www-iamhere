@@ -83,7 +83,6 @@ mapzen.whosonfirst.iamhere = (function(){
 				}
 				
 				if (mapzen.whosonfirst.iplookup.endpoint()){
-				       
 					mapzen.whosonfirst.iamhere.iplookup();
 				}
 
@@ -211,15 +210,36 @@ mapzen.whosonfirst.iamhere = (function(){
 
 			'iplookup': function(ip){
 
+				var jar = self.cookiejar();
+
+				if (jar['donot_iplookup']){
+					mapzen.whosonfirst.log.info("skipping IP lookup because cookies say so");
+					return;
+				}
+
 				var on_lookup = function(rsp){
 
-					// console.log(rsp);
 					mapzen.whosonfirst.log.info("IP lookup for " + rsp['ip'] + " is: " + rsp['wofid']);
 
-					wofid = rsp['whosonfirst_id'];
-					var url = mapzen.whosonfirst.data.id2abspath(wofid);
+					if (rsp['geom_bbox']){
+						var bbox = rsp['geom_bbox'];
+						bbox = bbox.split(',');
 
-					mapzen.whosonfirst.net.fetch(url, on_fetch, on_notfetch);
+						var sw = [ bbox[1], bbox[0] ];
+						var ne = [ bbox[3], bbox[2] ];
+						
+						self.jump_to_bbox(sw, ne);
+					}
+
+					else {
+
+						wofid = rsp['whosonfirst_id'];
+						var url = mapzen.whosonfirst.data.id2abspath(wofid);
+
+						mapzen.whosonfirst.net.fetch(url, on_fetch, on_notfetch);
+					}
+
+					self.iplookup_notice();
 				};
 
 				var on_notlookup = function(rsp){
@@ -239,7 +259,6 @@ mapzen.whosonfirst.iamhere = (function(){
 					var ne = [ bbox[3], bbox[2] ];
 
 					self.jump_to_bbox(sw, ne);
-
 				};
 
 				var on_notfetch = function(rsp){
@@ -247,6 +266,85 @@ mapzen.whosonfirst.iamhere = (function(){
 				};
 
 				mapzen.whosonfirst.iplookup.lookup(ip, on_lookup, on_notlookup);
+			},
+
+			'iplookup_notice': function(){
+
+				var close_modal = function(){
+					var about = document.getElementById("iamhere-modal");
+					var parent = about.parentElement;
+					parent.removeChild(about);
+				};
+
+				var on_disable = function(){
+					console.log("DISABLE");
+				};
+				
+				var on_close = function(){
+					close_modal();
+				};
+				
+				var about = document.createElement("div");
+				about.setAttribute("id", "iamhere-modal");
+				
+				var text = document.createElement("div");
+				text.setAttribute("id", "iamhere-modal-text");
+				
+				var head = document.createElement("h2");
+				head.appendChild(document.createTextNode("Words"));
+
+				var intro = document.createElement("div");
+
+				var p1_sentences = [
+					"Words",
+				];
+				
+				var p1_text = p1_sentences.join(" ");
+				
+				var p1 = document.createElement("p");
+				p1.appendChild(document.createTextNode(p1_text));
+				
+				var href = "https://mapzen.com/blog/FIXME/";
+				
+				var link = document.createElement("a");
+				link.setAttribute("href", href);
+				link.setAttribute("target", "blog");
+				link.appendChild(document.createTextNode(href));
+				
+				var p2 = document.createElement("p");
+				p2.appendChild(link);
+				
+				intro.appendChild(p1);
+				intro.appendChild(p2);
+				
+				text.appendChild(head);
+				text.appendChild(intro);
+				
+				var controls = document.createElement("div");
+				controls.setAttribute("id", "iamhere-modal-controls");
+
+				var disable_button = document.createElement("button");
+				disable_button.setAttribute("id", "iamhere-modal-disable-button");
+				disable_button.appendChild(document.createTextNode("disable IP lookups"));
+				
+				var close_button = document.createElement("button");
+				close_button.setAttribute("id", "iamhere-modal-close-button");
+				close_button.appendChild(document.createTextNode("close"));
+
+				disable_button.onclick = on_disable;
+				close_button.onclick = on_close;
+
+				controls.appendChild(close_button);				
+				controls.appendChild(disable_button);
+				
+				about.appendChild(text);
+				about.appendChild(controls);
+				
+				var body = document.body;
+				body.insertBefore(about, body.firstChild);
+				
+				return false;
+				
 			},
 			
 			'search': function(){
@@ -551,7 +649,27 @@ mapzen.whosonfirst.iamhere = (function(){
 				}
 
 				return _placetypes;
-			}
+			},
+
+			'cookiejar': function(){
+
+				var jar = {};
+				var cookie = document.cookie;
+				cookie = cookie.split(";");
+
+				var count = cookie.length;
+
+				for (var i=0; i < count; i++){
+
+					var pair = cookie[i].split("=");
+					var k = pair[0];
+					var v = pair[1];
+
+					jar[k] = v;
+				}
+
+				return jar;
+			},
 		};
 		
 		return self;

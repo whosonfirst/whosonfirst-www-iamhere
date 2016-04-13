@@ -105,3 +105,54 @@ text-align:center;
 		   padding-bottom:.5em;
 		   margin-bottom:.25em;
 }
+
+#iamhere-modal {
+    z-index: 2000 !important;	/* because the leaflet attribution widget is z-index 1000.... */
+    border:8px solid #333;
+    background-color: #fff;
+    min-width: 70%;
+    max-width: 70%;
+    max-height:450px;    
+    max-height:450px;    
+    padding: 1.5em;
+    position: fixed;
+    top: 25%;
+    left:15%;
+
+    font-size:.9em;
+    font-family: sans-serif !important;
+}
+
+#iamhere-modal-text {
+    position: relative;
+    min-height: 300px;
+    max-height:300px;
+    overflow: scroll !important;
+    padding-right:6em;
+    padding-bottom:1em !important;
+    font-size:.95em;
+}
+
+#iamhere-modal-controls {
+    margin-top:2em;
+    text-align: right;
+    position:absolute;
+    top: .25em;
+    right: 2.5em;
+    border: solid thin;
+}
+
+#iamhere-modal-disable-button {
+    border: solid thin;
+    padding: .5em;
+}
+
+#iamhere-modal-close-button {
+    margin-top:2em;
+    text-align: right;
+    position:absolute;
+    bottom: 2em;
+    width:90%;
+    border-top: 1px dotted #ccc;
+    padding-top:1em;
+}
