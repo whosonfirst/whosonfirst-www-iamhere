@@ -19,6 +19,8 @@ css-app:
 	java -jar utils/yuicompressor-2.4.8.jar --type css www/css/iamhere.app.css -o www/css/iamhere.app.min.css
 	rm www/css/iamhere.app.css
 
+mapzen:	tangram refill
+
 tangram:
 	if test -e www/javascript/tangram.js; then cp www/javascript/tangram.js www/javascript/tangram.js.bak; fi
 	curl -s -o www/javascript/tangram.js https://mapzen.com/tangram/tangram.debug.js
