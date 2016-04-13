@@ -161,3 +161,27 @@ text-align:center;
     width:100%;
     text-align: center !important;
 }
+
+#ip-lookups {
+    font-size:small;
+    padding:1em;
+}
+
+.ip-lookups-button {
+    border: none;
+    font-style:italic;    
+    background-color: transparent !important;
+}
+
+.ip-lookups-button:hover {
+    background-color:#999 !important;
+    color:#fff
+}
+
+#ip-lookups-enabled {
+    display:none;
+}
+
+#ip-lookups-disabled {
+    display:none;
+}

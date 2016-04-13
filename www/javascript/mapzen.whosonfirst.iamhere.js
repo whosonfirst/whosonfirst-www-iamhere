@@ -99,12 +99,46 @@ mapzen.whosonfirst.iamhere = (function(){
 					lon = match[2];
 				}
 				
-				else if (mapzen.whosonfirst.iplookup.endpoint()){
+				if (mapzen.whosonfirst.iplookup.endpoint()){
 
-					mapzen.whosonfirst.iamhere.iplookup();
+					var enabled = document.getElementById("ip-lookups-enabled");
+					var disabled = document.getElementById("ip-lookups-disabled");		
+					
+					var do_enable = function(){
+
+						self.set_cookie( disable_cookie, 0);
+						enabled.style = "display:block";
+						disabled.style = "display:none";						
+					};
+
+					var do_disable = function(){
+
+						self.set_cookie( disable_cookie, 1);
+						enabled.style = "display:none";
+						disabled.style = "display:block";						
+					};
+					
+					var on = document.getElementById("ip-lookups-on");					
+					var off = document.getElementById("ip-lookups-off");
+					
+					on.onclick = do_enable;
+					off.onclick = do_disable;
+
+					var jar = self.cookiejar();
+					
+					if (parseInt(jar[ disable_cookie ])){
+						disabled.style = "display:block";
+					}
+
+					else {
+						enabled.style = "display:block";
+					}
+					
+					if (! match){
+						mapzen.whosonfirst.iamhere.iplookup();
+					}
 				}
 
-				else {}
 				
 				window.onresize = self.draw_crosshairs;
 
@@ -218,9 +252,6 @@ mapzen.whosonfirst.iamhere = (function(){
 
 				var jar = self.cookiejar();
 
-				console.log(jar);
-				console.log(disable_cookie);
-				
 				if (parseInt(jar[ disable_cookie ])){
 					mapzen.whosonfirst.log.info("skipping IP lookup because cookies say so");
 					return;
@@ -231,6 +262,7 @@ mapzen.whosonfirst.iamhere = (function(){
 					mapzen.whosonfirst.log.info("IP lookup for " + rsp['ip'] + " is: " + rsp['wofid']);
 
 					if (rsp['geom_bbox']){
+						
 						var bbox = rsp['geom_bbox'];
 						bbox = bbox.split(',');
 
@@ -248,6 +280,8 @@ mapzen.whosonfirst.iamhere = (function(){
 						mapzen.whosonfirst.net.fetch(url, on_fetch, on_notfetch);
 					}
 
+					var jar = self.cookiejar();
+					
 					if (! parseInt(jar[ skip_notice_cookie ])){
 						self.iplookup_notice();
 					}
@@ -720,6 +754,8 @@ mapzen.whosonfirst.iamhere = (function(){
 					var k = pair[0];
 					var v = pair[1];
 
+					k = k.trim();
+					
 					jar[k] = v;
 				}
 
@@ -727,6 +763,9 @@ mapzen.whosonfirst.iamhere = (function(){
 			},
 
 			'set_cookie': function(k, v){
+
+				k = k.trim();
+				
 				var cookie = [k,v].join("=");
 				document.cookie = cookie;
 
