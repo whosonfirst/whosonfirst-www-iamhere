@@ -134,25 +134,21 @@ text-align:center;
 }
 
 #iamhere-modal-controls {
-    margin-top:2em;
-    text-align: right;
+    width: 95%;
     position:absolute;
-    top: .25em;
-    right: 2.5em;
-    border: solid thin;
+    bottom: 1em;
+    padding-top:1.25em;
+    margin-top:1em;
+    border-top:solid thin;
 }
 
 #iamhere-modal-disable-button {
     border: solid thin;
     padding: .5em;
+    float:right;
 }
 
 #iamhere-modal-close-button {
-    margin-top:2em;
-    text-align: right;
-    position:absolute;
-    bottom: 2em;
-    width:90%;
-    border-top: 1px dotted #ccc;
-    padding-top:1em;
+    border: solid thin;
+    padding: .5em;    
 }
