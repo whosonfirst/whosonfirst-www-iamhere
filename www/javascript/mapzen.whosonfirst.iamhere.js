@@ -221,7 +221,7 @@ mapzen.whosonfirst.iamhere = (function(){
 				console.log(jar);
 				console.log(disable_cookie);
 				
-				if (jar[ disable_cookie ]){
+				if (parseInt(jar[ disable_cookie ])){
 					mapzen.whosonfirst.log.info("skipping IP lookup because cookies say so");
 					return;
 				}
@@ -248,7 +248,7 @@ mapzen.whosonfirst.iamhere = (function(){
 						mapzen.whosonfirst.net.fetch(url, on_fetch, on_notfetch);
 					}
 
-					if (! jar[ skip_notice_cookie ]){
+					if (! parseInt(jar[ skip_notice_cookie ])){
 						self.iplookup_notice();
 					}
 				};
@@ -279,6 +279,14 @@ mapzen.whosonfirst.iamhere = (function(){
 				mapzen.whosonfirst.iplookup.lookup(ip, on_lookup, on_notlookup);
 			},
 
+			'iplookup_enable': function(){
+				self.set_cookie(disable_cookie, 0);
+			},
+
+			'iplookup_disable': function(){
+				self.set_cookie(disable_cookie, 1);
+			},
+			
 			'iplookup_notice': function(){
 
 				var close_modal = function(){
@@ -287,11 +295,11 @@ mapzen.whosonfirst.iamhere = (function(){
 					var disable = document.getElementById("iamhere-modal-disable");					
 					
 					if ((skip) && (skip.checked)){
-						self.set_cookie(skip_notice_cookie, 1);						
+						self.set_cookie(skip_notice_cookie, 1);
 					}
 					
 					if ((disable) && (disable.checked)){
-						self.set_cookie(disable_cookie, 1);
+						self.iplookup_disable();
 					}
 
 					var modal = document.getElementById("iamhere-modal");
