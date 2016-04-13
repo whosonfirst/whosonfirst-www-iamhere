@@ -3,12 +3,15 @@ mapzen.whosonfirst = mapzen.whosonfirst || {};
 
 mapzen.whosonfirst.iamhere = (function(){
 
-		var _scenefile = '/tangram/refill.yaml';
+	var _scenefile = '/tangram/refill.yaml';
+	
+	var map;
+	var current_layers = {};
+	var _placetypes = [];
 
-		var map;
-		var current_layers = {};
-		var _placetypes = [];
-
+	var disable_cookie = "disable_ip";
+	var skip_notice_cookie = "skip_notice";
+	
 		var self = {
 			
 			'init': function(){
@@ -81,11 +84,28 @@ mapzen.whosonfirst.iamhere = (function(){
 				else {
 					mapzen.whosonfirst.feedback.warning("Reverse geocoding is disabled because no API endpoint has been defined");
 				}
+
+				// sudo put me in a function or helper library?
+				// (20160216/thisisaaronland)
+
+				var hash = location.hash;
+				var match = hash.match(/^\#\d+\/(-?\d+(?:\.\d+))?\/(-?\d+(?:\.\d+))?/)
+
+				var lat = null;
+				var lon = null;
+
+				if (match){
+					lat = match[1];
+					lon = match[2];
+				}
 				
-				if (mapzen.whosonfirst.iplookup.endpoint()){
+				else if (mapzen.whosonfirst.iplookup.endpoint()){
+
 					mapzen.whosonfirst.iamhere.iplookup();
 				}
 
+				else {}
+				
 				window.onresize = self.draw_crosshairs;
 
 				window.ononline = self.on_online;
@@ -101,20 +121,6 @@ mapzen.whosonfirst.iamhere = (function(){
 
 				self.draw_crosshairs();
 				self.update_location();
-
-				// sudo put me in a function or helper library?
-				// (20160216/thisisaaronland)
-
-				var hash = location.hash;
-				var match = hash.match(/^\#\d+\/(-?\d+(?:\.\d+))?\/(-?\d+(?:\.\d+))?/)
-
-				var lat = null;
-				var lon = null;
-
-				if (match){
-					lat = match[1];
-					lon = match[2];
-				}
 
 				self.reverse_geocode(lat, lon);
 				
@@ -212,7 +218,10 @@ mapzen.whosonfirst.iamhere = (function(){
 
 				var jar = self.cookiejar();
 
-				if (jar['donot_iplookup']){
+				console.log(jar);
+				console.log(disable_cookie);
+				
+				if (jar[ disable_cookie ]){
 					mapzen.whosonfirst.log.info("skipping IP lookup because cookies say so");
 					return;
 				}
@@ -239,7 +248,9 @@ mapzen.whosonfirst.iamhere = (function(){
 						mapzen.whosonfirst.net.fetch(url, on_fetch, on_notfetch);
 					}
 
-					self.iplookup_notice();
+					if (! jar[ skip_notice_cookie ]){
+						self.iplookup_notice();
+					}
 				};
 
 				var on_notlookup = function(rsp){
@@ -271,32 +282,45 @@ mapzen.whosonfirst.iamhere = (function(){
 			'iplookup_notice': function(){
 
 				var close_modal = function(){
-					var about = document.getElementById("iamhere-modal");
-					var parent = about.parentElement;
-					parent.removeChild(about);
-				};
+					
+					var skip = document.getElementById("iamhere-modal-skip");
+					var disable = document.getElementById("iamhere-modal-disable");					
+					
+					if ((skip) && (skip.checked)){
+						self.set_cookie(skip_notice_cookie, 1);						
+					}
+					
+					if ((disable) && (disable.checked)){
+						self.set_cookie(disable_cookie, 1);
+					}
 
-				var on_disable = function(){
-					console.log("DISABLE");
+					var modal = document.getElementById("iamhere-modal");
+					var parent = modal.parentElement;
+					parent.removeChild(modal);
+
 				};
 				
 				var on_close = function(){
 					close_modal();
 				};
 				
-				var about = document.createElement("div");
-				about.setAttribute("id", "iamhere-modal");
+				var modal = document.createElement("div");
+				modal.setAttribute("id", "iamhere-modal");
 				
 				var text = document.createElement("div");
 				text.setAttribute("id", "iamhere-modal-text");
 				
-				var head = document.createElement("h2");
-				head.appendChild(document.createTextNode("Words"));
+				var head = document.createElement("h4");
+				head.appendChild(document.createTextNode("We have been \"helpful\" and auto-positioned the map for you..."));
 
 				var intro = document.createElement("div");
 
 				var p1_sentences = [
-					"Words",
+					"Using your computer's IP address we've asked the computer-robots where in the world they think you might be right now.",
+					"We've used this information to auto-position the map around there.",
+					"Sometimes the mappings from IP address to location are weird. Sometimes they are just wrong.",
+					"Sometimes computers being \"helpful\" like this is weird and creepy so we've added a setting to allow you to disable this feature in the future.",
+					"IP lookups are a complicated business and we have written a blog post about them if you'd like to know more."
 				];
 				
 				var p1_text = p1_sentences.join(" ");
@@ -304,7 +328,7 @@ mapzen.whosonfirst.iamhere = (function(){
 				var p1 = document.createElement("p");
 				p1.appendChild(document.createTextNode(p1_text));
 				
-				var href = "https://mapzen.com/blog/FIXME/";
+				var href = "https://mapzen.com/blog/missing-the-point/";
 				
 				var link = document.createElement("a");
 				link.setAttribute("href", href);
@@ -312,10 +336,39 @@ mapzen.whosonfirst.iamhere = (function(){
 				link.appendChild(document.createTextNode(href));
 				
 				var p2 = document.createElement("p");
+				p2.setAttribute("class", "iamhere-modal-blog");
 				p2.appendChild(link);
+				
+				var skip = document.createElement("input");
+				skip.setAttribute("type", "checkbox");
+				skip.setAttribute("id", "iamhere-modal-skip");
+				skip.setAttribute("name", "iamhere-modal-skip");
+
+				var skip_label = document.createElement("label");
+				skip_label.setAttribute("for", "iamhere-modal-skip");
+				skip_label.appendChild(document.createTextNode("Do not show this notice again."));
+
+				var p3 = document.createElement("p");
+				p3.appendChild(skip);
+				p3.appendChild(skip_label);				
+
+				var disable = document.createElement("input");
+				disable.setAttribute("type", "checkbox");
+				disable.setAttribute("id", "iamhere-modal-disable");
+				disable.setAttribute("name", "iamhere-modal-disable");
+
+				var disable_label = document.createElement("label");
+				disable_label.setAttribute("for", "iamhere-modal-disable");
+				disable_label.appendChild(document.createTextNode("Please disable IP lookups altogether"));
+
+				var p4 = document.createElement("p");
+				p4.appendChild(disable);
+				p4.appendChild(disable_label);				
 				
 				intro.appendChild(p1);
 				intro.appendChild(p2);
+				intro.appendChild(p4);
+				intro.appendChild(p3);
 				
 				text.appendChild(head);
 				text.appendChild(intro);
@@ -323,25 +376,19 @@ mapzen.whosonfirst.iamhere = (function(){
 				var controls = document.createElement("div");
 				controls.setAttribute("id", "iamhere-modal-controls");
 
-				var disable_button = document.createElement("button");
-				disable_button.setAttribute("id", "iamhere-modal-disable-button");
-				disable_button.appendChild(document.createTextNode("disable IP lookups"));
-				
 				var close_button = document.createElement("button");
 				close_button.setAttribute("id", "iamhere-modal-close-button");
 				close_button.appendChild(document.createTextNode("close"));
 
-				disable_button.onclick = on_disable;
 				close_button.onclick = on_close;
 
 				controls.appendChild(close_button);				
-				controls.appendChild(disable_button);
 				
-				about.appendChild(text);
-				about.appendChild(controls);
+				modal.appendChild(text);
+				modal.appendChild(controls);
 				
 				var body = document.body;
-				body.insertBefore(about, body.firstChild);
+				body.insertBefore(modal, body.firstChild);
 				
 				return false;
 				
@@ -670,6 +717,14 @@ mapzen.whosonfirst.iamhere = (function(){
 
 				return jar;
 			},
+
+			'set_cookie': function(k, v){
+				var cookie = [k,v].join("=");
+				document.cookie = cookie;
+
+				var enc_cookie = mapzen.whosonfirst.php.htmlspecialchars(cookie);
+				mapzen.whosonfirst.log.info("set cookie " + enc_cookie);				
+			}
 		};
 		
 		return self;

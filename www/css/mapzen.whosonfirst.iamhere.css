@@ -118,9 +118,6 @@ text-align:center;
     position: fixed;
     top: 25%;
     left:15%;
-
-    font-size:.9em;
-    font-family: sans-serif !important;
 }
 
 #iamhere-modal-text {
@@ -128,9 +125,8 @@ text-align:center;
     min-height: 300px;
     max-height:300px;
     overflow: scroll !important;
-    padding-right:6em;
     padding-bottom:1em !important;
-    font-size:.95em;
+    font-size:.98em;
 }
 
 #iamhere-modal-controls {
@@ -142,13 +138,26 @@ text-align:center;
     border-top:solid thin;
 }
 
-#iamhere-modal-disable-button {
+#iamhere-modal-close-button {
     border: solid thin;
     padding: .5em;
     float:right;
 }
 
-#iamhere-modal-close-button {
-    border: solid thin;
-    padding: .5em;    
+#iamhere-modal-close-button:hover {
+    background-color:#999;
+    color: #fff;
+}
+
+#iamhere-modal-skip {
+    margin-right: 1em;
+}
+
+#iamhere-modal-disable {
+    margin-right: 1em;
+}
+
+.iamhere-modal-blog {
+    width:100%;
+    text-align: center !important;
 }
