@@ -287,7 +287,7 @@ mapzen.whosonfirst.iamhere = (function(){
 					var jar = self.cookiejar();
 					
 					if (! parseInt(jar[ skip_notice_cookie ])){
-						self.iplookup_notice();
+						self.iplookup_notice(rsp);
 					}
 				};
 
@@ -325,7 +325,7 @@ mapzen.whosonfirst.iamhere = (function(){
 				self.set_cookie(disable_cookie, 1);
 			},
 			
-			'iplookup_notice': function(){
+			'iplookup_notice': function(rsp){
 
 				var close_modal = function(){
 					
@@ -361,9 +361,18 @@ mapzen.whosonfirst.iamhere = (function(){
 
 				var intro = document.createElement("div");
 
+				var where = "";
+				
+				if ((rsp) && (rsp['name'])){
+
+					var enc_name = mapzen.whosonfirst.php.htmlspecialchars(rsp['name']);
+					where = "They seem to think you are somewhere near or around " + enc_name + ".";
+				}
+				
 				var p1_sentences = [
-					"Using your computer's IP address we've asked the computer-robots in the sky where in the world they think you might be right now.",
-					"We've used this information to auto-position the map around there.",
+					"Using your computer's IP address we've asked the computer-robots-in-the-sky where in the world they think you might be right now.",
+					where, 
+					"We've used this information to auto-position the map accordingly.",
 					"Sometimes the mappings from IP address to location are weird. Sometimes they are just wrong.",
 					"Sometimes computers being \"helpful\" like this is weird and creepy so we've added a setting to allow you to disable this feature in the future.",
 					"IP lookups are a complicated business and we have written a blog post about them if you'd like to know more."
