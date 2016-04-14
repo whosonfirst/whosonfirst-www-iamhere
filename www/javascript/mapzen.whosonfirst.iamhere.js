@@ -375,8 +375,7 @@ mapzen.whosonfirst.iamhere = (function(){
 					"We've used this information to auto-position the map accordingly.",
 					"Sometimes the mappings from IP address to location are weird. Sometimes they are just wrong.",
 					"Sometimes computers being \"helpful\" like this is weird and creepy so we've added a setting to allow you to disable this feature in the future.",
-					// waiting on blog post (20160414/thisisaaronland)
-					// "IP lookups are a complicated business and we have written a blog post about them if you'd like to know more."
+					"IP lookups are a complicated business and we have written a blog post about them if you'd like to know more."
 				];
 				
 				var p1_text = p1_sentences.join(" ");
@@ -422,8 +421,7 @@ mapzen.whosonfirst.iamhere = (function(){
 				p4.appendChild(disable_label);				
 				
 				intro.appendChild(p1);
-				// waiting on blog post (20160414/thisisaaronland)
-				// intro.appendChild(p2);
+				intro.appendChild(p2);
 				intro.appendChild(p4);
 				intro.appendChild(p3);
 				
