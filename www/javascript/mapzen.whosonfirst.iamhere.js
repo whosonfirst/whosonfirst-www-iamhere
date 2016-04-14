@@ -98,8 +98,8 @@ mapzen.whosonfirst.iamhere = (function(){
 					lat = match[1];
 					lon = match[2];
 				}
-				
-				if (mapzen.whosonfirst.iplookup.endpoint()){
+
+				if (mapzen.whosonfirst.iplookup.enabled()){
 
 					var enabled = document.getElementById("ip-lookups-enabled");
 					var disabled = document.getElementById("ip-lookups-disabled");		

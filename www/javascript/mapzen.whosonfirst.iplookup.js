@@ -3,9 +3,11 @@ mapzen.whosonfirst = mapzen.whosonfirst || {};
 
 mapzen.whosonfirst.iplookup = (function(){
 
-		var _endpoint = 'http://localhost:8668';
+		var _endpoint = 'https://ip.dev.mapzen.com/';
 		var _apikey = '';
 
+		var _enabled = true;
+	
 		var self = {
 
 			'lookup': function(ip, on_success, on_error){
@@ -25,6 +27,15 @@ mapzen.whosonfirst.iplookup = (function(){
 				mapzen.whosonfirst.log.info("lookup IP " + ip)
 
 				mapzen.whosonfirst.net.fetch(req, on_success, on_error);
+			},
+
+			'enabled': function(bool){
+
+				if (typeof(bool) != "undefined"){
+					_enabled = (bool) ? true : false;
+				}
+
+				return _enabled;
 			},
 			
 			'endpoint': function(e){
