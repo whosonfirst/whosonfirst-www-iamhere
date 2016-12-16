@@ -28,7 +28,7 @@ if __name__ == '__main__':
     opt_parser.add_option('--data-host', dest='data_host', action='store', default='localhost', help='The host to run the WOF data server on (default is localhost)')
     opt_parser.add_option('--data-port', dest='data_port', action='store', default='9999', help='The port to run the WOF data server on (default is 9999)')
     opt_parser.add_option('--www-host', dest='www_host', action='store', default='localhost', help='The host to run the WOF web server on (default is localhost)')
-    opt_parser.add_option('--www-port', dest='www_port', action='store', default='8001', help='The port to run the WOF web server on (default is localhost)')
+    opt_parser.add_option('--www-port', dest='www_port', action='store', default='8001', help='The port to run the WOF web server on (default is 8001)')
     opt_parser.add_option('--iplookup-host', dest='iplookup_host', action='store', default='localhost', help='The host to run the WOF IP lookup server on (default is localhost)')
     opt_parser.add_option('--iplookup-port', dest='iplookup_port', action='store', default='8668', help='The port to run the WOF IP lookup server on (default is localhost)')
     opt_parser.add_option('--iplookup-source', dest='iplookup_source', action='store', default="whosonfirst", help='The db source used by the WOF IP lookup server on (default is "whosonfirst")')
