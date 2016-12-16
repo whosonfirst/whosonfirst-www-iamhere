@@ -1,3 +1,5 @@
+app: mapzen js css
+
 js: js-app js-deps
 
 js-deps:
