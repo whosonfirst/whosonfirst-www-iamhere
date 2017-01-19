@@ -30,5 +30,6 @@ refill:
 	cp www/tangram/images/building-grid.gif www/tangram/building-grid
 
 tangram:
+	echo "we are pinned to 0.11.6 pending fixes to 0.11.7+"; exit 1
 	curl -s -o www/javascript/tangram.js https://mapzen.com/tangram/tangram.debug.js
 	curl -s -o www/javascript/tangram.min.js https://mapzen.com/tangram/tangram.min.js
