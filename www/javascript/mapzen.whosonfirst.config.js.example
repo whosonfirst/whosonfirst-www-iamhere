@@ -28,6 +28,9 @@ mapzen.whosonfirst.config = (function(){
 			// mapzen.whosonfirst.pelias.endpoint("");
 			// mapzen.whosonfirst.pelias.apikey("");
 
+			// Mapzen vector tiles require an API key
+			mapzen.whosonfirst.leaflet.tangram.set_api_key("");
+			
 			// general debugging
 			// mapzen.whosonfirst.log.show();
 		}

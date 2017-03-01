@@ -33,3 +33,10 @@ tangram:
 	echo "we are pinned to 0.11.6 pending fixes to 0.11.7+"; exit 1
 	curl -s -o www/javascript/tangram.js https://mapzen.com/tangram/tangram.debug.js
 	curl -s -o www/javascript/tangram.min.js https://mapzen.com/tangram/tangram.min.js
+
+dev-www:
+	utils/darwin/wof-clone-website -ignore \~ -ignore .DS_Store -ignore building-grid -ignore .gitignore -strict -s3-bucket whosonfirst.dev.mapzen.com -s3-prefix iamhere -source www/
+
+prod-www:
+	utils/darwin/wof-clone-website -ignore \~ -ignore .DS_Store -ignore building-grid -ignore .gitignore -strict -s3-prefix iamhere -source www/
+

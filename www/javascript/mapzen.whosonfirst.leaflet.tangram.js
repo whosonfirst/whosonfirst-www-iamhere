@@ -5,6 +5,8 @@ mapzen.whosonfirst.leaflet = mapzen.whosonfirst.leaflet || {};
 mapzen.whosonfirst.leaflet.tangram = (function(){
 
 	var _scenefile = '/spelunker/static/tangram/refill.yaml'
+	var _key = 'mapzen-XXXXXXX';
+	
 	var _cache = {};
 
 	var self = {
@@ -52,7 +54,12 @@ mapzen.whosonfirst.leaflet.tangram = (function(){
 			var attribution = self.render_attributions(attributions);
 
 			var tangram = Tangram.leafletLayer({
-				scene: scene,
+				scene: {
+					import: _scenefile,
+					global: {
+						sdk_mapzen_api_key: _key
+					}
+				},
 				numWorkers: 2,
         			unloadInvisibleTiles: false,
 				updateWhenIdle: false,
@@ -103,7 +110,12 @@ mapzen.whosonfirst.leaflet.tangram = (function(){
 			}
 
 			return parts.join(" | ");
+		},
+
+		set_api_key: function(api_key) {
+			_key = api_key;
 		}
+		
 	};
 
 	return self;
