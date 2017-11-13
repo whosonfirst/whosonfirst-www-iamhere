@@ -9,7 +9,7 @@ mapzen.whosonfirst.pip = (function(){
 
 			'get_by_latlon': function(lat, lon, placetype, on_success, on_error){
 
-				var q = { 'latitude': lat, 'longitude': lon };
+				var q = { 'latitude': lat, 'longitude': lon, 'v1': 1 };
 
 				if (placetype){
 					q['placetype'] = placetype;

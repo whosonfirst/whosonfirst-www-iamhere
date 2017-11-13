@@ -21,18 +21,23 @@ css-app:
 	java -jar utils/yuicompressor-2.4.8.jar --type css www/css/iamhere.app.css -o www/css/iamhere.app.min.css
 	rm www/css/iamhere.app.css
 
-mapzen:	tangram refill
+mapzen:	tangram refill mapzenjs
+
+mapzenjs:
+	curl -s -o www/css/mapzen.js.css https://mapzen.com/js/mapzen.css
+	curl -s -o www/javascript/mapzen.js https://mapzen.com/js/mapzen.js
+	curl -s -o www/javascript/mapzen.min.js https://mapzen.com/js/mapzen.min.js
 
 refill:
-	curl -s -o www/tangram/refill.yaml https://raw.githubusercontent.com/tangrams/refill-style/gh-pages/refill-style.yaml
-	curl -s -o www/tangram/images/refill@2x.png https://raw.githubusercontent.com/tangrams/refill-style/gh-pages/images/refill%402x.png
-	curl -s -o www/tangram/images/building-grid.gif https://raw.githubusercontent.com/tangrams/refill-style/gh-pages/images/building-grid.gif
-	cp www/tangram/images/building-grid.gif www/tangram/building-grid
+	curl -s -o www/tangram/refill-style.zip https://mapzen.com/carto/refill-style/refill-style.zip
 
 tangram:
-	echo "we are pinned to 0.11.6 pending fixes to 0.11.7+"; exit 1
+	# echo "we are pinned to 0.11.6 pending fixes to 0.11.7+"; exit 1
 	curl -s -o www/javascript/tangram.js https://mapzen.com/tangram/tangram.debug.js
 	curl -s -o www/javascript/tangram.min.js https://mapzen.com/tangram/tangram.min.js
+
+places-api-js:
+	curl -s -o www/javascript/mapzen.places.api.js https://raw.githubusercontent.com/whosonfirst/whosonfirst-www-api/master/www/javascript/mapzen.places.api.js
 
 dev-www:
 	utils/darwin/wof-clone-website -ignore \~ -ignore .DS_Store -ignore building-grid -ignore .gitignore -strict -s3-bucket whosonfirst.dev.mapzen.com -s3-prefix iamhere -source www/
