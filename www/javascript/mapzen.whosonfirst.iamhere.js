@@ -29,7 +29,6 @@ mapzen.whosonfirst.iamhere = (function(){
 				// 2. In the interim just run this:
 				// https://github.com/oschwald/maxminddb-golang
 				// and do the concordance dance
-
 				
 				var swlat = 37.70120736474139;
 				var swlon = -122.68707275390624;
@@ -75,6 +74,11 @@ mapzen.whosonfirst.iamhere = (function(){
 					mapzen.whosonfirst.feedback.warning("Search is disabled because no API endpoint has been defined");
 				}
 
+				var findme = document.getElementById("findme");
+				findme.style.cssText = "display:inline !important;";
+				findme.onclick = self.geolocate;
+				
+				/*
 				if (mapzen.whosonfirst.pip.endpoint()){
 					var findme = document.getElementById("findme");
 					findme.style.cssText = "display:inline !important;";
@@ -84,7 +88,8 @@ mapzen.whosonfirst.iamhere = (function(){
 				else {
 					mapzen.whosonfirst.feedback.warning("Reverse geocoding is disabled because no API endpoint has been defined");
 				}
-
+				*/
+				
 				// sudo put me in a function or helper library?
 				// (20160216/thisisaaronland)
 
@@ -573,19 +578,21 @@ mapzen.whosonfirst.iamhere = (function(){
 				el.innerHTML = "";
 			},
 
-			'on_reverse_geocode': function(possible){
+			'on_reverse_geocode': function(rsp){
 
-				var count_possible = possible.length;
+				var places = rsp["places"];
+				var count_places = places.length;
+
 				var count_current = current_layers.length;
 
-				mapzen.whosonfirst.log.info("reverse geocode possible results: " + count_possible);
+				mapzen.whosonfirst.log.info("reverse geocode possible results: " + count_places);
 
 				var to_keep = {}
 				
-				for (var i=0; i < count_possible; i++){
+				for (var i=0; i < count_places; i++){
 					
-					var loc = possible[i];
-					var wofid = loc['Id'];
+					var loc = places[i];
+					var wofid = loc['wof:id'];
 					
 					if (current_layers[wofid]){
 						to_keep[wofid] = 1;
@@ -609,19 +616,19 @@ mapzen.whosonfirst.iamhere = (function(){
 				var li = document.getElementById("whereami-reversegeo");
 				li.style.cssText = "display:inline !important;";
 
-				if (! count_possible){
+				if (! count_places){
 					li.innerHTML = "a place we don't know about";
 					return;
 				}
 				
-				var count = possible.length;
+				var count = places.length;
 				var where = [];
 	
 				for (var i=0; i < count; i++){
 					
-					var loc = possible[i];
-					var wofid = loc['Id'];
-					var name = loc['Name'];
+					var loc = places[i];
+					var wofid = loc['wof:d'];
+					var name = loc['wof:name'];
 
 					var enc_id  = encodeURIComponent(wofid);
 					var enc_name = mapzen.whosonfirst.php.htmlspecialchars(name);
