@@ -11,6 +11,8 @@ mapzen.whosonfirst.pip = (function(){
 
 				var q = { 'latitude': lat, 'longitude': lon };
 
+				q['v1'] = 1;	// PLEASE MAKE THIS A FLAG OR BETTER YET UPDATE THE CODE TO HANDLE SPR RESPONSES
+
 				if (placetype){
 					q['placetype'] = placetype;
 				}
