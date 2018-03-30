@@ -626,7 +626,7 @@ mapzen.whosonfirst.iamhere = (function(){
 					var enc_id  = encodeURIComponent(wofid);
 					var enc_name = mapzen.whosonfirst.php.htmlspecialchars(name);
 
-					var link = '<a href="https://whosonfirst.mapzen.com/spelunker/id/' + enc_id + '/">';
+					var link = '<a href="https://spelunker.whosonfirst.org/id/' + enc_id + '/">';
 					link += enc_name
 					link += '</a>';
 
